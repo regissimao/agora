@@ -3,7 +3,7 @@ package br.com.agora.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -22,12 +22,41 @@ public class Usuario {
     private String cpfCpnj;
 
     @Column(name = "data_nascimento", nullable = false)
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
 
     @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "senha", nullable = false)
     private String senha;
+
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo;
+
+    @Column(name = "cidade", nullable = false)
+    private String cidade;
+
+    @Column(name = "logradouro", nullable = false)
+    private String logradouro;
+
+    @Column(name = "numero", nullable = false)
+    private String numero;
+
+    @Column(name = "complemento", nullable = false)
+    private String complemento;
+
+    @Column(name = "cep", nullable = false)
+    private String cep;
+
+    @Column(name = "bairro", nullable = false)
+    private String bairro;
+
+    @Column(name = "municipio", nullable = false)
+    private String municipio;
+
+    @Column(name = "uf", nullable = false)
+    private String uf;
+
+
 
 }
