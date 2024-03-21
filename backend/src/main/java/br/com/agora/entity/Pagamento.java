@@ -2,7 +2,7 @@ package br.com.agora.entity;
 
 import java.util.Date;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,10 +20,13 @@ public class Pagamento {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+    @Column(name = "status", nullable = false)
 	private  boolean status;
 	
+    @Column(name = "tipo", nullable = false)
     private  boolean tipo;
-
+    
+    @Column(name = "dataPedido", nullable = false)
     private  Date dataPedido;
 
 	private Pagamento() {};
