@@ -1,12 +1,20 @@
 package br.com.agora.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -33,5 +41,8 @@ public class Usuario  {
 
     @Column(name = "senha", nullable = false)
     private String senha;
+    
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private List<Pagamento> pagamentos;
 
 }
