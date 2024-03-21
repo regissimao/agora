@@ -2,6 +2,8 @@ package br.com.agora.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.Embeddable;
+
 
 @Embeddable
 @Getter @Setter
