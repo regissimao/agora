@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.Embeddable;
 
-
 @Embeddable
 @Getter @Setter
 public class Endereco {
