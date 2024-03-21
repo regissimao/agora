@@ -1,49 +1,49 @@
 package br.com.agora.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import java.util.Date;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @Entity
+@Table(name = "tb_pedido")
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_pedido")
 public class Pedido {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "usuario_id")
-    private Integer usuario;
-
-    @Column(name = "livro_id")
-    private Integer livros;
-
-    @Column(name = "vendedor")
-    private String vendedor;
-
-    @Column(name = "pagamento_id")
-    private Integer pagamento;
 
     @Column(name = "data_pedido")
-    private LocalDateTime dataPedido;
+    private Date dataPedido;
 
     @Column(name = "preco")
     private Double preco;
 
-    private LocalDateTime prazoEntrega;
+    @Column(name = "prazo_entrega")
+    private Date prazoEntrega;
 
-    private LocalDateTime dataEntrega;
+    @Column(name = "data_entrega")
+    private Date dataEntrega;
 
     private String endereco;
 
     private String observacao;
 
+    @Column(name = "statu_entrega")
     private String statusEntrega;
 
+    @Column(name = "valor_frete")
     private String valorFrete;
 
 }

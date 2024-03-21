@@ -8,11 +8,11 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "tb_usuario")
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_usuario")
 public class Usuario  {
 
     @Id

@@ -8,13 +8,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@Getter @Setter
 @Entity
 @Table(name="tb_pagamento")
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pagamento {
     @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,9 +29,6 @@ public class Pagamento {
     @Column(name = "tipo", nullable = false)
     private  boolean tipo;
     
-    @Column(name = "dataPedido", nullable = false)
+    @Column(name = "data_pedido", nullable = false)
     private  Date dataPedido;
-
-	private Pagamento() {};
-
 }
