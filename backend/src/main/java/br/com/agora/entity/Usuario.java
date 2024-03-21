@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -33,5 +34,8 @@ public class Usuario  {
 
     @Column(name = "senha", nullable = false)
     private String senha;
+    
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
+	private List<Pedido> pedidos;
 
 }
