@@ -1,6 +1,7 @@
 package br.com.agora.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="tb_pagamento")
-@Getter @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pagamento {
@@ -36,4 +37,7 @@ public class Pagamento {
     
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY)
+    private List<Pedido> pedidos;
 }
