@@ -54,4 +54,7 @@ public class Pedido {
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Pagamento pagamento;
+
 }

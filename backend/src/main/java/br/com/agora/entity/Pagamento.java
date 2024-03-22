@@ -1,6 +1,7 @@
 package br.com.agora.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,15 +10,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name="tb_pagamento")
-@Getter @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pagamento {
@@ -36,4 +37,7 @@ public class Pagamento {
     
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY)
+    private List<Pedido> pedidos;
 }
