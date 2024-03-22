@@ -45,7 +45,7 @@ public class Usuario  {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Pagamento> pagamentos;
     
-	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 
 }

@@ -78,6 +78,6 @@ public class Livro {
 	@Column(name = "livro_fisico")
 	private Boolean livroFisico;
 	
-	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "livro", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 }
