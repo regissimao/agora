@@ -17,7 +17,7 @@ public class Livro {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "isbn", nullable = false)
+	@Column(name = "isbn", nullable = false, length = 13)
 	private String isbn;
 
 	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
@@ -46,30 +46,23 @@ public class Livro {
 	@Column(name = "data_publicacao")
 	private Date dataPublicacao;
 	
-	private String dimensao;
-	
-	private double peso;
-	
 	@Column(name = "peso_fisico")
-	private double precoFisico;
+	private Double precoFisico;
 	
 	@Column(name = "quantidade_estoque")
-	private int quantidadeEstoque;
+	private Integer quantidadeEstoque;
 	
 	@Column(name = "arquivo_digital")
 	private String arquivoDigital;
 	
 	@Column(name = "preco_digital")
-	private double precoDigital;
+	private Double precoDigital;
 	
 	@Column(name = "capa_livro")
 	private String capaLivro;
-	
-	@Column(name = "livro_digital")
-	private Boolean livroDigital;
-	
-	@Column(name = "livro_fisico")
-	private Boolean livroFisico;
+
+	@Column(name = "tipo_livro")
+	private String tipoLivro;
 	
 	@OneToMany(mappedBy = "livro", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
