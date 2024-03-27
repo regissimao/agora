@@ -3,6 +3,7 @@ package br.com.agora.service;
 import br.com.agora.dto.request.CadastrarLivroRequest;
 import br.com.agora.dto.response.CadastrarLivroResponse;
 import br.com.agora.entity.Livro;
+import br.com.agora.exception.BadRequestException;
 import br.com.agora.repository.LivroRepository;
 import br.com.agora.util.Diretorios;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +27,15 @@ public class LivroService {
     private final Diretorios diretorios;
 
 
-    public CadastrarLivroResponse cadastrarLivro(CadastrarLivroRequest livroRequest) throws IOException, ParseException {
+    public CadastrarLivroResponse cadastrarLivro(CadastrarLivroRequest livroRequest) throws IOException {
+        Date data;
         String pathCapa = uploadCapa(livroRequest.getIsbn(), livroRequest.getCapaLivro());
         String pathPdf = uploadPdf(livroRequest.getIsbn(), livroRequest.getArquivoDigital());
-        Date data = new SimpleDateFormat("yyyy-MM-dd").parse(livroRequest.getDataPublicacao());
+        try {
+            data = new SimpleDateFormat("yyyy-MM-dd").parse(livroRequest.getDataPublicacao());
+        } catch (ParseException e) {
+            throw new BadRequestException(" Data de publicação inválida. Formato esperado: yyyy-MM-dd");
+        }
 
         Livro livro = livrosRepository.save(new Livro(livroRequest, pathCapa, pathPdf, data));
         return new CadastrarLivroResponse("Livro Cadastrado", livro);

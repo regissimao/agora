@@ -22,7 +22,7 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<CadastrarLivroResponse> cadastrarLivro(@ModelAttribute CadastrarLivroRequest request) throws IOException, ParseException {
+    public ResponseEntity<CadastrarLivroResponse> cadastrarLivro(@ModelAttribute @Valid CadastrarLivroRequest request) throws IOException, ParseException {
         CadastrarLivroResponse response = livroService.cadastrarLivro(request);
 
         return ResponseEntity.ok(response);
