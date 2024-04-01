@@ -3,6 +3,7 @@ package br.com.agora.entity;
 import java.util.Date;
 import java.util.List;
 
+import br.com.agora.dto.request.CadastrarLivroRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,7 @@ public class Livro {
 	@Column(name = "autor", nullable = false)
 	private String autor;
 	
-	private String sinope;
+	private String sinopse;
 	
 	@Column(name = "editora", nullable = false)
 	private String editora;
@@ -66,4 +67,22 @@ public class Livro {
 	
 	@OneToMany(mappedBy = "livro", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
+
+	public Livro(CadastrarLivroRequest livroRequest, String pathCapa, String pathPdf, Date data) {
+		this.isbn = livroRequest.getIsbn();
+		this.titulo = livroRequest.getTitulo();
+		this.autor = livroRequest.getAutor();
+		this.editora = livroRequest.getEditora();
+		this.categoria = livroRequest.getCategoria();
+		this.sinopse = livroRequest.getSinopse();
+		this.idioma = livroRequest.getIdioma();
+		this.dataPublicacao = data;
+		this.precoFisico = livroRequest.getPrecoFisico();
+		this.precoDigital = livroRequest.getPrecoDigital();
+		this.quantidadeEstoque = livroRequest.getQuantidadeEstoque();
+		this.arquivoDigital = pathPdf;
+		this.capaLivro = pathCapa;
+		this.tipoLivro = livroRequest.getTipoLivro();
+		this.pedidos = null;
+	}
 }
