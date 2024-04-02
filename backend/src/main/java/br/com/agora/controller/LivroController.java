@@ -1,13 +1,16 @@
 package br.com.agora.controller;
 
 import br.com.agora.dto.request.CadastrarLivroRequest;
+import br.com.agora.dto.request.RetornarLivroRequest;
 import br.com.agora.dto.response.CadastrarLivroResponse;
+import br.com.agora.dto.response.RetornarDadosLivroResponse;
 import br.com.agora.service.LivroService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +29,16 @@ public class LivroController {
         CadastrarLivroResponse response = livroService.cadastrarLivro(request);
 
         return ResponseEntity.ok(response);
+
     }
+
+    @PostMapping("/retornar-livro")
+    public ResponseEntity<RetornarDadosLivroResponse> retornarDadosLivro(@RequestBody @Valid RetornarLivroRequest request) throws IOException, ParseException {
+        
+        RetornarDadosLivroResponse response = livroService.retornarDadosLivro(request.getIsbn());
+
+        return ResponseEntity.ok(response);
+
+    }
+
 }
