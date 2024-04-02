@@ -23,7 +23,7 @@ public class PedidoController {
     @GetMapping("/obter/{id}")
     public ResponseEntity<RetornarResumoPedidoResponse> retornarResumoPedido(
             @PathVariable Long id) throws IOException, ParseException {
-        RetornarResumoPedidoResponse response = pedidoService.retornarPedido(id);
-        return ResponseEntity.ok(response);
+        RetornarResumoPedidoResponse  response = pedidoService.retornarPedido(id);
+        return ResponseEntity.ok(response);  
     }
 }
