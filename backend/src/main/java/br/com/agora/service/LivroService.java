@@ -9,6 +9,8 @@ import br.com.agora.util.Diretorios;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +20,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +42,11 @@ public class LivroService {
 
         Livro livro = livrosRepository.save(new Livro(livroRequest, pathCapa, pathPdf, data));
         return new CadastrarLivroResponse("Livro Cadastrado", livro);
+    }
+
+    public List<Livro> getAllBooks(Pageable pageable) {
+        Page<Livro> livros = livrosRepository.findAll(pageable);
+        return livros.getContent();
     }
 
     public String uploadPdf(String isbnLivro, MultipartFile arquivo) throws IOException {
