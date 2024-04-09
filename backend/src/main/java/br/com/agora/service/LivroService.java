@@ -1,9 +1,10 @@
 package br.com.agora.service;
 
-import br.com.agora.dto.ConsultaLivroResponseDTO;
-import br.com.agora.dto.PesquisaLivroResponseDTO;
+import br.com.agora.dto.ListarLivroVO;
 import br.com.agora.dto.request.CadastrarLivroRequest;
 import br.com.agora.dto.response.CadastrarLivroResponse;
+import br.com.agora.dto.response.ListarLivroResponse;
+import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.entity.Livro;
 import br.com.agora.exception.BadRequestException;
 import br.com.agora.repository.LivroRepository;
@@ -21,39 +22,29 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class LivroService {
-
     private final LivroRepository livroRepository;
     private final Diretorios diretorios;
 
-    public ConsultaLivroResponseDTO consultarLivros() {
+    public ListarLivroResponse listarLivros() {
         List<Livro> livros = livroRepository.findAll();
-        List<LivroDTO> livroDTOs = livros.stream()
-                .map(this::toLivroDTO)
-                .collect(Collectors.toList());
-        return new ConsultaLivroResponseDTO(livroDTOs);
+        if (livros.isEmpty())
+            throw new BadRequestException("Nenhum Livro Encontrado");
+        List<ListarLivroVO> livroVOs = livros.stream()
+                .map(livro -> new ListarLivroVO(livro.getIsbn(), livro.getTitulo()))
+                .toList();
+        return new ListarLivroResponse(livroVOs);
     }
 
-    public PesquisaLivroResponseDTO pesquisarLivros(String termoPesquisa) {
+    public PesquisaLivroResponse pesquisarLivros(String termoPesquisa) {
         List<Livro> livros = livroRepository.findByTituloContainingIgnoreCase(termoPesquisa);
-        List<LivroDTO> livroDTOs = livros.stream()
-                .map(this::toLivroDTO)
-                .collect(Collectors.toList());
-        return new PesquisaLivroResponseDTO(livroDTOs);
-    }
-
-    private LivroDTO toLivroDTO(Livro livro) {
-        return new LivroDTO(
-                livro.getId(),
-                livro.getIsbn(),
-                livro.getTitulo(),
-                livro.getAutor(),
-                // Mapear outros atributos do LivroDTO conforme necessário
-        );
+        List<ListarLivroVO> livroVOs = livros.stream()
+                .map(livro -> new ListarLivroVO(livro.getIsbn(), livro.getTitulo()))
+                .toList();
+        return new PesquisaLivroResponse(livroVOs);
     }
 
     public CadastrarLivroResponse cadastrarLivro(CadastrarLivroRequest livroRequest) throws IOException {
