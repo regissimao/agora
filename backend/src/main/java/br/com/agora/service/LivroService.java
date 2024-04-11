@@ -79,7 +79,7 @@ public class LivroService {
 
     public Resource downloadCapa(String isbn) throws MalformedURLException {
 
-        Livro livro = livrosRepository.findByIsbn(isbn);
+        Livro livro = livroRepository.findByIsbn(isbn);
 
         if (livro == null){
             throw new BadRequestException("Livro não encontrado");
@@ -91,35 +91,10 @@ public class LivroService {
 
     }
 
-    public RetornarDadosLivroResponse retornarDadosLivro(String isbnLivro) {
-          
-        Livro livro = livrosRepository.findByIsbn(isbnLivro);
-
-        if (livro == null){
-            throw new BadRequestException("Livro não encontrado");
-        }
-
-        return new RetornarDadosLivroResponse(livro);
-
-    } 
-
-    public Resource downloadCapa(String isbn) throws MalformedURLException {
-
-        Livro livro = livrosRepository.findByIsbn(isbn);
-
-        if (livro == null){
-            throw new BadRequestException("Livro não encontrado");
-        }
-
-        Path path = Paths.get(livro.getCapaLivro());
-        
-        return new UrlResource(path.toUri());
-
-    }
 
     public RetornarDadosLivroResponse retornarDadosLivro(String isbnLivro) {
           
-        Livro livro = livrosRepository.findByIsbn(isbnLivro);
+        Livro livro = livroRepository.findByIsbn(isbnLivro);
 
         if (livro == null){
             throw new BadRequestException("Livro não encontrado");

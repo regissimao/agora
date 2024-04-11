@@ -84,6 +84,7 @@ public class Livro {
 		this.arquivoDigital = pathPdf;
 		this.capaLivro = pathCapa;
 		this.tipoLivro = livroRequest.getTipoLivro();
+		this.numeroPagina = livroRequest.getNumeroPagina();
 		this.pedidos = null;
 	}
 }
