@@ -1,7 +1,10 @@
 package br.com.agora.service;
 
+import br.com.agora.dto.ListarLivroVO;
 import br.com.agora.dto.request.CadastrarLivroRequest;
 import br.com.agora.dto.response.CadastrarLivroResponse;
+import br.com.agora.dto.response.ListarLivroResponse;
+import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.entity.Livro;
 import br.com.agora.exception.BadRequestException;
 import br.com.agora.repository.LivroRepository;
@@ -25,10 +28,26 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LivroService {
-
-    private final LivroRepository livrosRepository;
+    private final LivroRepository livroRepository;
     private final Diretorios diretorios;
 
+    public ListarLivroResponse listarLivros() {
+        List<Livro> livros = livroRepository.findAll();
+        if (livros.isEmpty())
+            throw new BadRequestException("Nenhum Livro Encontrado");
+        List<ListarLivroVO> livroVOs = livros.stream()
+                .map(livro -> new ListarLivroVO(livro.getIsbn(), livro.getTitulo()))
+                .toList();
+        return new ListarLivroResponse(livroVOs);
+    }
+
+    public PesquisaLivroResponse pesquisarLivros(String termoPesquisa) {
+        List<Livro> livros = livroRepository.findByTituloContainingIgnoreCase(termoPesquisa);
+        List<ListarLivroVO> livroVOs = livros.stream()
+                .map(livro -> new ListarLivroVO(livro.getIsbn(), livro.getTitulo()))
+                .toList();
+        return new PesquisaLivroResponse(livroVOs);
+    }
 
     public CadastrarLivroResponse cadastrarLivro(CadastrarLivroRequest livroRequest) throws IOException {
         Date data;
@@ -40,7 +59,7 @@ public class LivroService {
             throw new BadRequestException(" Data de publicação inválida. Formato esperado: yyyy-MM-dd");
         }
 
-        Livro livro = livrosRepository.save(new Livro(livroRequest, pathCapa, pathPdf, data));
+        Livro livro = livroRepository.save(new Livro(livroRequest, pathCapa, pathPdf, data));
         return new CadastrarLivroResponse("Livro Cadastrado", livro);
     }
 
@@ -53,13 +72,12 @@ public class LivroService {
         String fileName = "pdf_livro_" + isbnLivro + ".pdf";
         return salvarArquivo(diretorios.getPathPdfLivro(), fileName, arquivo);
     }
-    public String uploadCapa(String isbnLivro, MultipartFile arquivo) throws IOException {
 
+    public String uploadCapa(String isbnLivro, MultipartFile arquivo) throws IOException {
         String fileName = "capa_livro_" + isbnLivro + ".jpg";
         return salvarArquivo(diretorios.getPathCapa(), fileName, arquivo);
     }
 
-    /*PRIVATE BLOCK*/
     private String salvarArquivo(String diretorio, String nomeArquivo, MultipartFile arquivo) throws IOException {
         Path caminhoDiretorio = Paths.get(diretorio);
         if (!Files.exists(caminhoDiretorio)) {
