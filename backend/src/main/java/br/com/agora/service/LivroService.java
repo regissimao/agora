@@ -68,7 +68,7 @@ public class LivroService {
     }
 
     public List<Livro> getAllBooks(Pageable pageable) {
-        Page<Livro> livros = livrosRepository.findAll(pageable);
+        Page<Livro> livros = livroRepository.findAll(pageable);
         return livros.getContent();
     }
     
