@@ -3,6 +3,7 @@ package br.com.agora.service;
 import br.com.agora.dto.ListarLivroVO;
 import br.com.agora.dto.request.CadastrarLivroRequest;
 import br.com.agora.dto.response.CadastrarLivroResponse;
+import br.com.agora.dto.response.RetornarDadosLivroResponse;
 import br.com.agora.dto.response.ListarLivroResponse;
 import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.entity.Livro;
@@ -10,12 +11,15 @@ import br.com.agora.exception.BadRequestException;
 import br.com.agora.repository.LivroRepository;
 import br.com.agora.util.Diretorios;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -67,17 +71,72 @@ public class LivroService {
         Page<Livro> livros = livrosRepository.findAll(pageable);
         return livros.getContent();
     }
-
+    
     public String uploadPdf(String isbnLivro, MultipartFile arquivo) throws IOException {
         String fileName = "pdf_livro_" + isbnLivro + ".pdf";
         return salvarArquivo(diretorios.getPathPdfLivro(), fileName, arquivo);
     }
 
+
     public String uploadCapa(String isbnLivro, MultipartFile arquivo) throws IOException {
+        
         String fileName = "capa_livro_" + isbnLivro + ".jpg";
         return salvarArquivo(diretorios.getPathCapa(), fileName, arquivo);
     }
 
+    public Resource downloadCapa(String isbn) throws MalformedURLException {
+
+        Livro livro = livrosRepository.findByIsbn(isbn);
+
+        if (livro == null){
+            throw new BadRequestException("Livro não encontrado");
+        }
+
+        Path path = Paths.get(livro.getCapaLivro());
+        
+        return new UrlResource(path.toUri());
+
+    }
+
+    public RetornarDadosLivroResponse retornarDadosLivro(String isbnLivro) {
+          
+        Livro livro = livrosRepository.findByIsbn(isbnLivro);
+
+        if (livro == null){
+            throw new BadRequestException("Livro não encontrado");
+        }
+
+        return new RetornarDadosLivroResponse(livro);
+
+    } 
+
+    public Resource downloadCapa(String isbn) throws MalformedURLException {
+
+        Livro livro = livrosRepository.findByIsbn(isbn);
+
+        if (livro == null){
+            throw new BadRequestException("Livro não encontrado");
+        }
+
+        Path path = Paths.get(livro.getCapaLivro());
+        
+        return new UrlResource(path.toUri());
+
+    }
+
+    public RetornarDadosLivroResponse retornarDadosLivro(String isbnLivro) {
+          
+        Livro livro = livrosRepository.findByIsbn(isbnLivro);
+
+        if (livro == null){
+            throw new BadRequestException("Livro não encontrado");
+        }
+
+        return new RetornarDadosLivroResponse(livro);
+
+    } 
+
+    /*PRIVATE BLOCK*/
     private String salvarArquivo(String diretorio, String nomeArquivo, MultipartFile arquivo) throws IOException {
         Path caminhoDiretorio = Paths.get(diretorio);
         if (!Files.exists(caminhoDiretorio)) {
@@ -89,4 +148,5 @@ public class LivroService {
         }
         return diretorio + nomeArquivo;
     }
+
 }
