@@ -44,7 +44,7 @@ public class LivroController {
 
     }
 
-    @PostMapping("/retornar-livro")
+    @GetMapping("/retornar-livro")
     public ResponseEntity<RetornarDadosLivroResponse> retornarDadosLivro(@RequestBody @Valid RetornarLivroRequest request) throws IOException, ParseException {
         
         RetornarDadosLivroResponse response = livroService.retornarDadosLivro(request.getIsbn());
