@@ -6,6 +6,7 @@ import br.com.agora.dto.request.RetornarLivroRequest;
 import br.com.agora.dto.request.PesquisaLivroRequest;
 import br.com.agora.dto.response.CadastrarLivroResponse;
 import br.com.agora.dto.response.RetornarDadosLivroResponse;
+import br.com.agora.entity.Livro;
 import br.com.agora.dto.response.ListarLivroResponse;
 import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.service.LivroService;
@@ -18,6 +19,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/livro")
@@ -66,7 +69,7 @@ public class LivroController {
     public ResponseEntity<List<Livro>> listarLivros(
             @RequestParam(name = "pagina", defaultValue = "0") int pagina,
             @RequestParam(name = "quantidade", defaultValue = "20") int quantidade) {
-        Pageable pageable = PageRequest.of(pagina, quantidade);
+        PageRequest pageable = PageRequest.of(pagina, quantidade);
         List<Livro> livros = livroService.getAllBooks(pageable);
         return ResponseEntity.ok(livros);
     }

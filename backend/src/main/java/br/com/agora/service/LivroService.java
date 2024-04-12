@@ -16,7 +16,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -67,7 +67,7 @@ public class LivroService {
         return new CadastrarLivroResponse("Livro Cadastrado", livro);
     }
 
-    public List<Livro> getAllBooks(Pageable pageable) {
+    public List<Livro> getAllBooks(PageRequest pageable) {
         Page<Livro> livros = livroRepository.findAll(pageable);
         return livros.getContent();
     }
