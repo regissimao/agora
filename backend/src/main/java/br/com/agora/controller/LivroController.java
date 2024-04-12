@@ -62,6 +62,15 @@ public class LivroController {
                 .body(resource);
     }
 
+    @GetMapping("/listar")
+    public ResponseEntity<List<Livro>> listarLivros(
+            @RequestParam(name = "pagina", defaultValue = "0") int pagina,
+            @RequestParam(name = "quantidade", defaultValue = "20") int quantidade) {
+        Pageable pageable = PageRequest.of(pagina, quantidade);
+        List<Livro> livros = livroService.getAllBooks(pageable);
+        return ResponseEntity.ok(livros);
+    }
+
     @Operation(summary = "Listar livros", description = "Retorna uma lista de todos os livros disponíveis")
     @ApiResponse(responseCode = "200", description = "Livros listados com sucesso", content = @Content(schema = @Schema(implementation = ListarLivroResponse.class)))
     @GetMapping(value = "/listar-livro", produces = MediaType.APPLICATION_JSON_VALUE)
