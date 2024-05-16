@@ -1,0 +1,18 @@
+
+.success {
+  background-color: #036644;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.danger {
+  background-color: #a30303;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.warning {
+  background-color: #ffd900;
+  color: #655100;
+  margin-bottom: 20px;
+}
