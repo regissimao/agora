@@ -2,17 +2,17 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { Mensagens } from './mensagens.model';
+import { Mensagem } from './mensagem.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MensagensHandlerService {
 
-  mensagensDeErroEmiter = new EventEmitter<String[]>();
-  mensagemDeSucessoEmiter = new EventEmitter<String>();
+  mensagemDeErroEmiter = new EventEmitter<Mensagem>();
+  mensagemDeSucessoEmiter = new EventEmitter<Mensagem>();
 
-  mensagensEmiter = new EventEmitter<Mensagens>();
+  mensagemEmiter = new EventEmitter<Mensagem>();
 
   constructor(
     private router: Router
@@ -31,34 +31,34 @@ export class MensagensHandlerService {
     }
   }
 
-  mostrarMensagensDeSucesso(mensagens: string[]) {
-    this.emitirMensagens(1, mensagens);
+  mostrarMensagemDeSucesso(mensagem: string) {
+    this.emitirMensagem(1, mensagem);
   }
 
-  mostrarMensagensDeErro(mensagens: string[]) {
-    this.emitirMensagens(2, mensagens);
+  mostrarMensagemDeErro(mensagem: string) {
+    this.emitirMensagem(2, mensagem);
   }
 
-  mostrarMensagensDeAlerta(mensagens: string[]) {
-    this.emitirMensagens(3, mensagens);
+  mostrarMensagemDeAlerta(mensagem: string) {
+    this.emitirMensagem(3, mensagem);
   }
 
-  private emitirMensagens(tipo: number, mensagens: string[]) {
+  private emitirMensagem(tipo: number, mensagem: string) {
 
-    const mensagensModel = new Mensagens();
-    mensagensModel.tipo = tipo;
-    mensagensModel.mensagens = mensagens;
-    this.mensagensEmiter.emit(mensagensModel);
+    const mensagemModel = new Mensagem();
+    mensagemModel.tipo = tipo;
+    mensagemModel.mensagem = mensagem;
+    this.mensagemEmiter.emit(mensagemModel);
   }
 
   resetMensagens() {
 
-    this.mensagensDeErroEmiter.emit([]);
-    this.mensagemDeSucessoEmiter.emit("");
+    this.mensagemDeErroEmiter.emit(new Mensagem());
+    this.mensagemDeSucessoEmiter.emit(new Mensagem());
 
-    const mensagensModel = new Mensagens();
-    mensagensModel.tipo = 0;
-    mensagensModel.mensagens = [];
-    this.mensagensEmiter.emit(mensagensModel);
+    const mensagemModel = new Mensagem();
+    mensagemModel.tipo = 0;
+    mensagemModel.mensagem = "";
+    this.mensagemEmiter.emit(mensagemModel);
   }
 }

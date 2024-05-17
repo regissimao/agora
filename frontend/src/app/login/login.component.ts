@@ -53,11 +53,13 @@ export class LoginComponent {
           form.reset();
         },
         (erro) => {
-          this.mensagensHandlerService.mostrarMensagensDeErro(erro.error);
+          console.log(erro);
+          console.log(erro.error.titulo);
+          this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo);
         }
       );
     } else {
-      this.mensagensHandlerService.mostrarMensagensDeErro(['Preecha os campor de email e senha']);
+      this.mensagensHandlerService.mostrarMensagemDeErro('Preecha os campor de email e senha');
     }
   }
 

@@ -21,7 +21,7 @@ mat-form-field {
 .botao {
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: var(--cor-primaria);
+  background-color: blue;
   color: white;
 }
 

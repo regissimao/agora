@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 import { MensagensHandlerService } from './mensagens-handler.service';
-import { Mensagens } from './mensagens.model';
+import { Mensagem } from './mensagem.model';
 
 @Component({
   selector: 'app-mensagens-handler',
@@ -18,20 +17,19 @@ export class MensagensHandlerComponent implements OnInit, OnDestroy {
 
   @Output() atualizar = new EventEmitter();
 
-  mensagens: Mensagens = new Mensagens();
+  mensagem: Mensagem = new Mensagem();
   subscriptionMensagens$: Subscription | undefined;
 
   constructor(
-    private router: Router,
     private mensagensHandlerService: MensagensHandlerService
   ) { }
 
   ngOnInit() {
 
     this.subscriptionMensagens$ =
-      this.mensagensHandlerService.mensagensEmiter.
+      this.mensagensHandlerService.mensagemEmiter.
         subscribe(dados => {
-            this.mensagens = dados;
+            this.mensagem = dados;
         });
   }
 
