@@ -19,7 +19,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./quantidade.component.css']
 })
 export class QuantidadeComponent {
-  @Input() quantidade: number = 1;
+  @Input() quantidade: number = 0;
   @Output() quantidadeChange: EventEmitter<number> = new EventEmitter<number>();
 
   increment() {
@@ -28,7 +28,7 @@ export class QuantidadeComponent {
   }
 
   decrement() {
-    if (this.quantidade > 1) {
+    if (this.quantidade > 0) {
       this.quantidade--;
       this.quantidadeChange.emit(this.quantidade);
     }

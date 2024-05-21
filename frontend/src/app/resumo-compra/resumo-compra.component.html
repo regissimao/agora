@@ -1,45 +1,61 @@
 <div class="resumo-compra-container">
-    <h1 class="title">Resumo Compra</h1>
-    
-    <app-mensagens-handler></app-mensagens-handler>
-    
-    <div class="book-summary" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
-        <img [src]="compra.imagemUrl" alt="Imagem do Livro" class="book-image">
-        
-        <div class="book-details" fxLayout="column" fxLayoutAlign="start start">
-            <mat-form-field appearance="fill">
-                <mat-label>Autor:</mat-label>
-                <input matInput id="autor" [(ngModel)]="compra.autor" disabled>
-            </mat-form-field>
-      
-            <mat-form-field appearance="fill">
-                <mat-label>Título:</mat-label>
-                <input matInput id="titulo" [(ngModel)]="compra.titulo" disabled>
-            </mat-form-field>
-      
-            <mat-form-field appearance="fill">
-                <mat-label>ISBN:</mat-label>
-                <input matInput id="isbn" [(ngModel)]="compra.isbn" disabled>
-            </mat-form-field>
-            
-            <mat-form-field appearance="fill">
-                <mat-label>Preço:</mat-label>
-                <input matInput id="preco" [(ngModel)]="compra.preco" disabled>
-            </mat-form-field>
+  <h1 class="title">Resumo Compra</h1>
 
-            <div>
-                <label>Quantidade:</label>
-                <app-component-quantidade [(quantidade)]="compra.quantidade"></app-component-quantidade>
-            </div>
+  <app-mensagens-handler></app-mensagens-handler>
 
-            <mat-card class="total-card">
-                <mat-card-content>
-                    <div class="total-container">
-                        <label>Total:</label>
-                        <span class="total">{{ total }}</span>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
+  <div
+    class="book-summary"
+    fxLayout="row"
+    fxLayoutGap="20px"
+    fxLayoutAlign="start center"
+  >
+    <img [src]="compra.imagemUrl" alt="Imagem do Livro" class="book-image" />
+
+    <div class="book-details" fxLayout="column" fxLayoutAlign="start start">
+      <mat-form-field appearance="fill">
+        <mat-label>Autor:</mat-label>
+        <input matInput id="autor" [(ngModel)]="compra.autor" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Título:</mat-label>
+        <input matInput id="titulo" [(ngModel)]="compra.titulo" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>ISBN:</mat-label>
+        <input matInput id="isbn" [(ngModel)]="compra.isbn" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Preço:</mat-label>
+        <input matInput id="preco" [(ngModel)]="compra.preco" disabled />
+      </mat-form-field>
+
+      <div>
+        <label>Quantidade:</label>
+        <app-component-quantidade
+          [(quantidade)]="compra.quantidade"
+        ></app-component-quantidade>
+      </div>
+
+      <mat-card class="total-card">
+        <mat-card-content>
+          <div class="total-container">
+            <label>Total:</label>
+            <span class="total">{{ total }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- <app-component-endereco
+      [logradouro]="compra.logradouro"
+      [numero]="compra.numero"
+      [cidade]="compra.cidade"
+      [cep]="compra.cep"
+      [complemento]="compra.complemento"
+      [estado]="compra.estado"
+    ></app-component-endereco> -->
     </div>
+  </div>
 </div>
