@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
+import { ResumoCompraComponent } from './resumo-compra/resumo-compra.component';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
-    LoginComponent
+    LoginComponent,
+    ResumoCompraComponent
   ],
   providers: [],
   templateUrl: './app.component.html',
