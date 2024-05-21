@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
 import { ResumoCompraComponent } from './resumo-compra/resumo-compra.component';
+import { QuantidadeComponent } from '../componentes/quantidade/quantidade.component';
 
 @Component({
   selector: 'app-root',
@@ -18,11 +19,13 @@ import { ResumoCompraComponent } from './resumo-compra/resumo-compra.component';
     HttpClientModule,
     FontAwesomeModule,
     LoginComponent,
-    ResumoCompraComponent
+    ResumoCompraComponent,
+    QuantidadeComponent
   ],
   providers: [],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent {
   title = 'Ágora';

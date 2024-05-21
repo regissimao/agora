@@ -2,14 +2,15 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MensagensHandlerComponent } from '../mensagens-handler/mensagens-handler.component';
 import { MensagensHandlerService } from '../mensagens-handler/mensagens-handler.service';
 import { Compra } from '../servicos/entidades.model';
 import { CompraService } from '../servicos/resumo-compra.service';
 import { LogadoService } from '../servicos/logado.service';
+import { QuantidadeComponent } from '../../componentes/quantidade/quantidade.component';
 
 @Component({
   selector: 'app-resumo-compra',
@@ -19,9 +20,10 @@ import { LogadoService } from '../servicos/logado.service';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatCheckboxModule,
     MensagensHandlerComponent,
+    QuantidadeComponent,
+    MatCardModule
   ],
   templateUrl: './resumo-compra.component.html',
   styleUrl: './resumo-compra.component.css'
@@ -50,9 +52,11 @@ export class ResumoCompraComponent {
         preco: '25',
         quantidade: 1,
       };
-
   }
 
+  get total(): number {
+    return Number(this.compra.preco) * this.compra.quantidade;
+  }
 
   onSubmit(form: NgForm) {
     if (form.valid) {

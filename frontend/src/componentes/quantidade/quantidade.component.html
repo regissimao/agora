@@ -1,0 +1,9 @@
+<div class="quantidade-container">
+  <button mat-icon-button (click)="decrement()">
+    <mat-icon>remove</mat-icon>
+  </button>
+  <input matInput type="number" [(ngModel)]="quantidade" readonly>
+  <button mat-icon-button (click)="increment()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

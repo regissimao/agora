@@ -27,6 +27,19 @@
                 <input matInput id="preco" [(ngModel)]="compra.preco" disabled>
             </mat-form-field>
 
+            <div>
+                <label>Quantidade:</label>
+                <app-component-quantidade [(quantidade)]="compra.quantidade"></app-component-quantidade>
+            </div>
+
+            <mat-card class="total-card">
+                <mat-card-content>
+                    <div class="total-container">
+                        <label>Total:</label>
+                        <span class="total">{{ total }}</span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 </div>
