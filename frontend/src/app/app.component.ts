@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './component/login/login.component';
+import {NavigationComponent} from "./navigation/navigation.component";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
-    LoginComponent
+    LoginComponent,
+    NavigationComponent
   ],
   providers: [],
   templateUrl: './app.component.html',

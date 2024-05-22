@@ -1,0 +1,52 @@
+<mat-sidenav-container  class="sidenav-container">
+  <mat-sidenav *ngIf="isLoggedIn()" #sidenav mode="over" opened="false" class="sidenav">
+    <mat-toolbar color="primary">Loja de Livros</mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item routerLink="/categorias">
+        <mat-icon>category</mat-icon>
+        <span>Categorias</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/autores">
+        <mat-icon>person</mat-icon>
+        <span>Autores</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/promocoes">
+        <mat-icon>local_offer</mat-icon>
+        <span>Promoções</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/novidades">
+        <mat-icon>new_releases</mat-icon>
+        <span>Novidades</span>
+      </mat-list-item>
+
+      <!-- Administrative Section -->
+      <mat-list-item [matMenuTriggerFor]="adminMenu">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Administrativo</span>
+      </mat-list-item>
+      <mat-menu #adminMenu="matMenu">
+        <button mat-menu-item routerLink="/cadastrar-livro">
+          <mat-icon>add_box</mat-icon>
+          <span>Cadastrar Livros</span>
+        </button>
+      </mat-menu>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar  color="primary">
+      <button *ngIf="isLoggedIn()" mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Loja de Livros</span>
+      <span class="spacer"></span>
+      <mat-icon>favorite</mat-icon>
+      <mat-icon>shopping_cart</mat-icon>
+      <mat-icon>account_circle</mat-icon>
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -5,11 +5,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MensagensHandlerComponent } from '../mensagens-handler/mensagens-handler.component';
-import { MensagensHandlerService } from '../mensagens-handler/mensagens-handler.service';
-import { Usuario } from '../servicos/entidades.model';
-import { UsuarioService } from '../servicos/usuario.service';
-import { LogadoService } from '../servicos/logado.service';
+import { MensagensHandlerComponent } from '../../mensagens-handler/mensagens-handler.component';
+import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handler.service';
+import { Usuario } from '../../servicos/entidades.model';
+import { UsuarioService } from '../../servicos/usuario.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ import { LogadoService } from '../servicos/logado.service';
     MensagensHandlerComponent
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
@@ -38,18 +38,19 @@ export class LoginComponent {
     private router: Router,
     private mensagensHandlerService: MensagensHandlerService,
     private usuarioService: UsuarioService,
-    private logadoService: LogadoService,
+    private authService: AuthService
   ) {
     this.usuario = new Usuario();
   }
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-
       this.usuarioService.logar(this.usuario).subscribe(
-        (usuario) => {
-          this.logadoService.informarLogado(true);
+        (response) => {
+          // Assumindo que a resposta indica um login bem-sucedido
+          this.authService.login();
           this.router.navigate(['/pagina-inicial']);
+          this.logado.emit(true);
           form.reset();
         },
         (erro) => {
@@ -59,8 +60,7 @@ export class LoginComponent {
         }
       );
     } else {
-      this.mensagensHandlerService.mostrarMensagemDeErro('Preecha os campor de email e senha');
+      this.mensagensHandlerService.mostrarMensagemDeErro('Preencha os campos de email e senha');
     }
   }
-
 }
