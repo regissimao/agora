@@ -1,0 +1,108 @@
+<div class="container">
+  <mat-card>
+    <div class="header">
+      <h2>Cadastrar Livro</h2>
+    </div>
+
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="cadastro-livro-form">
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>ISBN</mat-label>
+          <input type="text" matInput name="isbn" maxlength="13" ngModel required>
+          <mat-error *ngIf="form.controls['isbn']?.invalid">ISBN deve ter 13 caracteres.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Nome</mat-label>
+          <input type="text" matInput name="titulo" ngModel required>
+          <mat-error *ngIf="form.controls['titulo']?.invalid">O Titulo é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Autor</mat-label>
+          <input type="text" matInput name="autor" ngModel required>
+          <mat-error *ngIf="form.controls['autor']?.invalid">Autor é obrigatório</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Editora</mat-label>
+          <input type="text" matInput name="editora" ngModel required>
+          <mat-error *ngIf="form.controls['editora']?.invalid">Editora é obrigatória</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Categoria</mat-label>
+          <input type="text" matInput name="categoria" ngModel required>
+          <mat-error *ngIf="form.controls['categoria']?.invalid">Categoria é obrigatória</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Idioma</mat-label>
+          <input type="text" matInput name="idioma" ngModel required>
+          <mat-error *ngIf="form.controls['idioma']?.invalid">Idioma é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Sinopse</mat-label>
+          <textarea matInput name="sinopse" ngModel required></textarea>
+          <mat-error *ngIf="form.controls['sinopse']?.invalid">A Sinopse é obrigatória</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Data de Publicação</mat-label>
+          <input type="date" matInput name="dataPublicacao" ngModel required>
+          <mat-error *ngIf="form.controls['dataPublicacao']?.invalid">Data de Publicação é obrigatória</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Tipo de Livro</mat-label>
+          <input type="text" matInput name="tipoLivro" ngModel required>
+          <mat-error *ngIf="form.controls['tipoLivro']?.invalid">Tipo de Livro é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Preço Digital</mat-label>
+          <input type="number" matInput name="precoDigital" ngModel>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Preço Físico</mat-label>
+          <input type="number" matInput name="precoFisico" ngModel>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Número de Páginas</mat-label>
+          <input type="number" matInput name="numeroPagina" ngModel>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Quantidade em Estoque</mat-label>
+          <input type="number" matInput name="quantidadeEstoque" ngModel>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row file-row">
+        <div class="form-group file-input">
+          <label for="capaLivro">Capa do Livro</label>
+          <input type="file" id="capaLivro" (change)="onFileSelected('capaLivro', $event)" />
+          <span *ngIf="capaLivro">Arquivo selecionado: {{ capaLivro.name }}</span>
+          <mat-error *ngIf="capaLivroError">{{ capaLivroError }}</mat-error>
+        </div>
+        <div class="form-group file-input">
+          <label for="arquivoDigital">PDF do Livro</label>
+          <input type="file" id="arquivoDigital" (change)="onFileSelected('arquivoDigital', $event)" />
+          <span *ngIf="arquivoDigital">Arquivo selecionado: {{ arquivoDigital.name }}</span>
+          <mat-error *ngIf="pdfLivroError">{{ pdfLivroError }}</mat-error>
+        </div>
+      </div>
+
+      <button type="submit" mat-raised-button color="primary">Cadastrar</button>
+    </form>
+  </mat-card>
+</div>

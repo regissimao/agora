@@ -32,11 +32,7 @@ public class CadastrarLivroRequest {
     private String dataPublicacao;
     @NotBlank(message = "Tipo deve ser informado")
     private String tipoLivro;
-    @NotNull(message = "Preço deve ser informado")
-    @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     private Double precoDigital;
-    @NotNull(message = "Preço deve ser informado")
-    @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     private Double precoFisico;
     private Integer numeroPagina;
     private Integer quantidadeEstoque;

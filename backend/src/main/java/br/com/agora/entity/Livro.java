@@ -12,7 +12,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Livro {
 	
 	@Id
