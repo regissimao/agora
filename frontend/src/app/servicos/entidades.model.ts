@@ -13,4 +13,14 @@ export class Compra {
   imagemUrl: string = "";
   preco: string = "";
   quantidade:number = 0;
+  endereco: Endereco[] = [];
+}
+
+class Endereco{
+  logradouro: string = "";
+  numero: string = "";
+  cidade: string = "";
+  cep: string = "";
+  complemento: string = "";
+  estado: string = "";
 }

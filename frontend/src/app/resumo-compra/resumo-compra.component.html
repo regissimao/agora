@@ -48,14 +48,24 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- <app-component-endereco
-      [logradouro]="compra.logradouro"
-      [numero]="compra.numero"
-      [cidade]="compra.cidade"
-      [cep]="compra.cep"
-      [complemento]="compra.complemento"
-      [estado]="compra.estado"
-    ></app-component-endereco> -->
+      <h1 class="title">Endereço Atual</h1>
+      <div *ngFor="let endereco of compra.endereco; let i = index">
+        <app-endereco
+          [logradouro]="endereco.logradouro"
+          [numero]="endereco.numero"
+          [cidade]="endereco.cidade"
+          [cep]="endereco.cep"
+          [complemento]="endereco.complemento"
+          [estado]="endereco.estado"
+        ></app-endereco>
+        <button mat-icon-button color="warn" (click)="removerEndereco(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="adicionarNovoEndereco()">
+        Adicionar Novo Endereço
+      </button>
     </div>
   </div>
 </div>

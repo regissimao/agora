@@ -1,0 +1,10 @@
+.endereco-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .endereco-item {
+    margin: 10px 0;
+  }
+  
