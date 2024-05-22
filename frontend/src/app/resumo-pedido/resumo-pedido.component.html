@@ -1,34 +1,34 @@
-<div class="resumo-compra-container">
-  <h1 class="title">Resumo Compra</h1>
+<div class="resumo-pedido-container">
+  <h1 class="title">Resumo pedido</h1>
 
-  <div class="book-summary">
-    <img [src]="compra.imagemUrl" alt="Imagem do Livro" class="book-image" />
+  <div class="book-summary" *ngIf="pedido.livro.length > 0">
+    <img [src]="pedido.livro[0].capaLivro" alt="Imagem do Livro" class="book-image" />
 
     <div class="book-details">
       <div class="detail-item">
         <h4>Autor:</h4>
-        <p>{{ compra.autor }}</p>
+        <p>{{ pedido.livro[0].autor }}</p>
       </div>
 
       <div class="detail-item">
         <h4>Título:</h4>
-        <p>{{ compra.titulo }}</p>
+        <p>{{ pedido.livro[0].titulo }}</p>
       </div>
 
       <div class="detail-item">
         <h4>ISBN:</h4>
-        <p>{{ compra.isbn }}</p>
+        <p>{{ pedido.livro[0].isbn }}</p>
       </div>
     </div>
 
     <div class="price-container">
       <div>
         <h4>Preço:</h4>
-        <p class="price">R${{ compra.preco }}</p>
+        <p class="price">R${{ pedido.preco }}</p>
       </div>
       <div>
         <h4>Quantidade:</h4>
-        <app-quantidade [(quantidade)]="compra.quantidade"></app-quantidade>
+        <app-quantidade [(quantidade)]="pedido.quantidade"></app-quantidade>
       </div>
       <button class="remove-button" (click)="removerItem()"></button>
     </div>
@@ -46,7 +46,7 @@
 
   <div class="address-container">
     <h1 class="title">Endereço Atual</h1>
-    <div *ngFor="let endereco of compra.endereco; let i = index" class="address-item">
+    <div *ngFor="let endereco of pedido.endereco; let i = index" class="address-item">
       <mat-card class="endereco-container">
         <button mat-icon-button class="remove-button" (click)="removerEndereco(i)">
           <mat-icon>close</mat-icon>

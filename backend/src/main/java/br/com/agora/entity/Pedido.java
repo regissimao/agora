@@ -37,7 +37,7 @@ public class Pedido {
     @Column(name = "data_entrega")
     private Date dataEntrega;
 
-    private String endereco;
+    private List<endereco> endereco;
 
     private String observacao;
 

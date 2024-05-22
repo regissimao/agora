@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
-import { ResumoCompraComponent } from './resumo-compra/resumo-compra.component';
+import { ResumoPedidoComponent } from './resumo-pedido/resumo-pedido.component';
 import { QuantidadeComponent } from '../componentes/quantidade/quantidade.component';
 
 @Component({
@@ -19,7 +19,7 @@ import { QuantidadeComponent } from '../componentes/quantidade/quantidade.compon
     HttpClientModule,
     FontAwesomeModule,
     LoginComponent,
-    ResumoCompraComponent,
+    ResumoPedidoComponent,
     QuantidadeComponent
   ],
   providers: [],
