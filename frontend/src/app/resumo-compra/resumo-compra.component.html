@@ -1,69 +1,96 @@
 <div class="resumo-compra-container">
   <h1 class="title">Resumo Compra</h1>
 
-  <app-mensagens-handler></app-mensagens-handler>
-
   <div class="book-summary">
     <img [src]="compra.imagemUrl" alt="Imagem do Livro" class="book-image" />
 
     <div class="book-details">
-      <mat-form-field appearance="fill">
-        <mat-label>Autor:</mat-label>
-        <input matInput id="autor" [(ngModel)]="compra.autor" disabled />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Título:</mat-label>
-        <input matInput id="titulo" [(ngModel)]="compra.titulo" disabled />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>ISBN:</mat-label>
-        <input matInput id="isbn" [(ngModel)]="compra.isbn" disabled />
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Preço:</mat-label>
-        <input matInput id="preco" [(ngModel)]="compra.preco" disabled />
-      </mat-form-field>
-    </div>
-  </div>
-
-  <div class="quantidade-container">
-    <label>Quantidade:</label>
-    <app-quantidade [(quantidade)]="compra.quantidade"></app-quantidade>
-  </div>
-
-  <mat-card class="total-card">
-    <mat-card-content>
-      <div class="total-container">
-        <label>Valor Total:</label>
-        <span class="total">{{ total }}</span>
+      <div class="detail-item">
+        <h4>Autor:</h4>
+        <p>{{ compra.autor }}</p>
       </div>
-    </mat-card-content>
-  </mat-card>
 
-  <div class="address-container">
-    <h1 class="title">Endereço Atual</h1>
-    <div *ngFor="let endereco of compra.endereco; let i = index" class="address-item">
-      <app-endereco
-        [logradouro]="endereco.logradouro"
-        [numero]="endereco.numero"
-        [cidade]="endereco.cidade"
-        [cep]="endereco.cep"
-        [complemento]="endereco.complemento"
-        [estado]="endereco.estado"
-        (enderecoRemovido)="removerEndereco(i)"
-      ></app-endereco>
+      <div class="detail-item">
+        <h4>Título:</h4>
+        <p>{{ compra.titulo }}</p>
+      </div>
+
+      <div class="detail-item">
+        <h4>ISBN:</h4>
+        <p>{{ compra.isbn }}</p>
+      </div>
     </div>
 
-    <button mat-raised-button color="primary" (click)="adicionarNovoEndereco()">
-      Adicionar Novo Endereço
-    </button>
+    <div class="price-container">
+      <div>
+        <h4>Preço:</h4>
+        <p class="price">R${{ compra.preco }}</p>
+      </div>
+      <div>
+        <h4>Quantidade:</h4>
+        <app-quantidade [(quantidade)]="compra.quantidade"></app-quantidade>
+      </div>
+      <button class="remove-button" (click)="removerItem()"></button>
+    </div>
+  </div>
+
+  <div class="total-card">
+    <span class="total-label">Valor Total:</span>
+    <span class="total-value">{{ total }}</span>
   </div>
 
   <div class="button-container">
     <button mat-stroked-button color="primary" (click)="voltar()">Voltar</button>
-    <button mat-flat-button color="accent" (click)="realizarPagamento()">Realizar Pagamento</button>
+    <button mat-raised-button color="primary" (click)="realizarPagamento()">Realizar Pagamento</button>
+  </div>
+
+  <div class="address-container">
+    <h1 class="title">Endereço Atual</h1>
+    <div *ngFor="let endereco of compra.endereco; let i = index" class="address-item">
+      <mat-card class="endereco-container">
+        <button mat-icon-button class="remove-button" (click)="removerEndereco(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <div class="endereco-item">
+          <mat-form-field appearance="fill">
+            <mat-label>Logradouro</mat-label>
+            <input matInput [(ngModel)]="endereco.logradouro" />
+          </mat-form-field>
+        </div>
+        <div class="endereco-item">
+          <mat-form-field appearance="fill">
+            <mat-label>Número</mat-label>
+            <input matInput [(ngModel)]="endereco.numero" />
+          </mat-form-field>
+        </div>
+        <div class="endereco-item">
+          <mat-form-field appearance="fill">
+            <mat-label>Cidade</mat-label>
+            <input matInput [(ngModel)]="endereco.cidade" />
+          </mat-form-field>
+        </div>
+        <div class="endereco-item">
+          <mat-form-field appearance="fill">
+            <mat-label>CEP</mat-label>
+            <input matInput [(ngModel)]="endereco.cep" />
+          </mat-form-field>
+        </div>
+        <div class="endereco-item">
+          <mat-form-field appearance="fill">
+            <mat-label>Complemento</mat-label>
+            <input matInput [(ngModel)]="endereco.complemento" />
+          </mat-form-field>
+        </div>
+        <div class="endereco-item">
+          <mat-form-field appearance="fill">
+            <mat-label>Estado</mat-label>
+            <input matInput [(ngModel)]="endereco.estado" />
+          </mat-form-field>
+        </div>
+      </mat-card>
+    </div>
+    <button class="button-address" mat-flat-button color="accent" (click)="adicionarNovoEndereco()">
+      Adicionar Novo Endereço
+    </button>
   </div>
 </div>

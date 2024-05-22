@@ -32,9 +32,9 @@ import { EnderecoComponent } from '../../componentes/endereco/endereco.component
     QuantidadeComponent,
     MatCardModule,
     EnderecoComponent,
-    MatButtonModule, 
-    MatDividerModule, 
-    MatIconModule
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
   ],
   templateUrl: './resumo-compra.component.html',
   styleUrls: ['./resumo-compra.component.css'],
@@ -53,21 +53,21 @@ export class ResumoCompraComponent {
     this.compra = {
       id: 1,
       autor: 'Everton Araújo',
-      titulo: 'Título do Livro',
+      titulo: 'A volta dos que não foram',
       isbn: '123-456-789',
       imagemUrl: 'https://via.placeholder.com/200x200',
       preco: '25',
       quantidade: 1,
       endereco: [
         {
-          logradouro: "Rua Teste",
-          numero: "242",
-          cidade: "Fortaleza",
-          cep: "6048850",
-          complemento: "Rua fechada",
-          estado: "CE"
-        }
-      ]
+          logradouro: 'Rua Teste',
+          numero: '242',
+          cidade: 'Fortaleza',
+          cep: '6048850',
+          complemento: 'Rua fechada',
+          estado: 'CE',
+        },
+      ],
     };
   }
 
@@ -83,7 +83,7 @@ export class ResumoCompraComponent {
       cidade: '',
       cep: '',
       complemento: '',
-      estado: ''
+      estado: '',
     });
   }
 
@@ -94,9 +94,13 @@ export class ResumoCompraComponent {
   voltar() {
     this.router.navigate(['/pagina-anterior']); // Adjust the route as necessary
   }
-  
+
   realizarPagamento() {
-    console.log("")
+    console.log('');
+  }
+
+  removerItem() {
+    console.log('');
   }
 
   onSubmit(form: NgForm) {
