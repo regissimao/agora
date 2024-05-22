@@ -1,10 +1,14 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { MensagensHandlerComponent } from '../mensagens-handler/mensagens-handler.component';
 import { MensagensHandlerService } from '../mensagens-handler/mensagens-handler.service';
 import { Compra } from '../servicos/entidades.model';
@@ -12,8 +16,6 @@ import { CompraService } from '../servicos/resumo-compra.service';
 import { LogadoService } from '../servicos/logado.service';
 import { QuantidadeComponent } from '../../componentes/quantidade/quantidade.component';
 import { EnderecoComponent } from '../../componentes/endereco/endereco.component';
-import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-resumo-compra',
@@ -30,19 +32,17 @@ import { MatIconModule } from '@angular/material/icon';
     QuantidadeComponent,
     MatCardModule,
     EnderecoComponent,
-    
+    MatButtonModule, 
+    MatDividerModule, 
+    MatIconModule
   ],
   templateUrl: './resumo-compra.component.html',
-  styleUrl: './resumo-compra.component.css',
+  styleUrls: ['./resumo-compra.component.css'],
 })
 export class ResumoCompraComponent {
   @Output() logado = new EventEmitter<boolean>();
 
-  titulo: string = '';
-  isbn: string = '';
-  autor: string = '';
   compra: Compra;
-  enderecosAdicionais: Compra[] = [];
 
   constructor(
     private router: Router,
@@ -89,6 +89,14 @@ export class ResumoCompraComponent {
 
   removerEndereco(index: number) {
     this.compra.endereco.splice(index, 1);
+  }
+
+  voltar() {
+    this.router.navigate(['/pagina-anterior']); // Adjust the route as necessary
+  }
+  
+  realizarPagamento() {
+    console.log("")
   }
 
   onSubmit(form: NgForm) {

@@ -3,15 +3,10 @@
 
   <app-mensagens-handler></app-mensagens-handler>
 
-  <div
-    class="book-summary"
-    fxLayout="row"
-    fxLayoutGap="20px"
-    fxLayoutAlign="start center"
-  >
+  <div class="book-summary">
     <img [src]="compra.imagemUrl" alt="Imagem do Livro" class="book-image" />
 
-    <div class="book-details" fxLayout="column" fxLayoutAlign="start start">
+    <div class="book-details">
       <mat-form-field appearance="fill">
         <mat-label>Autor:</mat-label>
         <input matInput id="autor" [(ngModel)]="compra.autor" disabled />
@@ -31,41 +26,44 @@
         <mat-label>Preço:</mat-label>
         <input matInput id="preco" [(ngModel)]="compra.preco" disabled />
       </mat-form-field>
-
-      <div>
-        <label>Quantidade:</label>
-        <app-component-quantidade
-          [(quantidade)]="compra.quantidade"
-        ></app-component-quantidade>
-      </div>
-
-      <mat-card class="total-card">
-        <mat-card-content>
-          <div class="total-container">
-            <label>Total:</label>
-            <span class="total">{{ total }}</span>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-      <h1 class="title">Endereço Atual</h1>
-      <div *ngFor="let endereco of compra.endereco; let i = index">
-        <app-endereco
-          [logradouro]="endereco.logradouro"
-          [numero]="endereco.numero"
-          [cidade]="endereco.cidade"
-          [cep]="endereco.cep"
-          [complemento]="endereco.complemento"
-          [estado]="endereco.estado"
-        ></app-endereco>
-        <button mat-icon-button color="warn" (click)="removerEndereco(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-
-      <button mat-raised-button color="primary" (click)="adicionarNovoEndereco()">
-        Adicionar Novo Endereço
-      </button>
     </div>
+  </div>
+
+  <div class="quantidade-container">
+    <label>Quantidade:</label>
+    <app-quantidade [(quantidade)]="compra.quantidade"></app-quantidade>
+  </div>
+
+  <mat-card class="total-card">
+    <mat-card-content>
+      <div class="total-container">
+        <label>Valor Total:</label>
+        <span class="total">{{ total }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="address-container">
+    <h1 class="title">Endereço Atual</h1>
+    <div *ngFor="let endereco of compra.endereco; let i = index" class="address-item">
+      <app-endereco
+        [logradouro]="endereco.logradouro"
+        [numero]="endereco.numero"
+        [cidade]="endereco.cidade"
+        [cep]="endereco.cep"
+        [complemento]="endereco.complemento"
+        [estado]="endereco.estado"
+        (enderecoRemovido)="removerEndereco(i)"
+      ></app-endereco>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="adicionarNovoEndereco()">
+      Adicionar Novo Endereço
+    </button>
+  </div>
+
+  <div class="button-container">
+    <button mat-stroked-button color="primary" (click)="voltar()">Voltar</button>
+    <button mat-flat-button color="accent" (click)="realizarPagamento()">Realizar Pagamento</button>
   </div>
 </div>

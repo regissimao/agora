@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-component-quantidade',
+  selector: 'app-quantidade',
   standalone: true,
   imports: [
     CommonModule,
