@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { PaginaInicialComponent } from './pagina-inicial/pagina-inicial.component';
-import {CadastrarLivroComponent} from "./cadastrar-livro/cadastrar-livro/cadastrar-livro.component";
+import { CadastrarLivroComponent } from './component/cadastrar-livro/cadastrar-livro.component';
 import {AuthGuard} from "./auth/auth.guard";
 
 export const routes: Routes = [

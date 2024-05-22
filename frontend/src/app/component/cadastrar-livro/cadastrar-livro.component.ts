@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LivroService } from '../../servicos/livro/livro.service';
 import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handler.service';
 import { NgIf } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { OnlyNumbersDirective } from '../../directive/only-numbers.directive';
 
 @Component({
   selector: 'app-cadastrar-livro',
@@ -21,7 +23,9 @@ import { NgIf } from '@angular/common';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    NgIf
+    NgIf,
+    MatSnackBarModule,
+    OnlyNumbersDirective
   ],
   templateUrl: './cadastrar-livro.component.html',
   styleUrls: ['./cadastrar-livro.component.css']
@@ -32,9 +36,11 @@ export class CadastrarLivroComponent {
   capaLivroError: string | null = null;
   pdfLivroError: string | null = null;
 
+
   constructor(
     private livroService: LivroService,
-    private mensagensHandlerService: MensagensHandlerService
+    private mensagensHandlerService: MensagensHandlerService,
+    private snackBar: MatSnackBar
   ) {}
 
   onFileSelected(field: string, event: Event) {
@@ -62,9 +68,9 @@ export class CadastrarLivroComponent {
   }
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
+    if (form.valid && form.value.isbn.length === 13) {
       const formData = new FormData();
-      formData.append('isbn', form.value.isbn.replace(/-/g, ''));
+      formData.append('isbn', form.value.isbn);
       formData.append('titulo', form.value.titulo);
       formData.append('autor', form.value.autor);
       formData.append('editora', form.value.editora);
@@ -84,17 +90,24 @@ export class CadastrarLivroComponent {
         formData.append('arquivoDigital', this.arquivoDigital);
       }
 
-      this.livroService.cadastrar(formData).subscribe(
-        () => {
-          alert('Livro Cadastrado com Sucesso!');
-          form.reset();
+      this.livroService.cadastrar(formData).subscribe({
+        next: () => {
+          this.mensagensHandlerService.mostrarMensagemDeSucesso('Livro cadastrado com sucesso!');
+          form.resetForm();
           this.resetFiles();
         },
-        (erro) => {
+        error: (erro) => {
+          // Aqui você pode fazer a verificação de erros específicos
           console.log(erro);
-          this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo || 'Erro ao cadastrar livro');
+          if (erro.status === 500) {
+            this.mensagensHandlerService.mostrarMensagemDeErro('Erro desconhecido ao cadastrar livro');
+          } else {
+            this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo || 'Erro ao cadastrar livro');
+          }
         }
-      );
+      });
+    } else {
+      this.snackBar.open('O ISBN deve ter exatamente 13 caracteres.', 'Fechar', { duration: 3000 });
     }
   }
 

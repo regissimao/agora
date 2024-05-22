@@ -30,7 +30,7 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/livro")
 @RequiredArgsConstructor
