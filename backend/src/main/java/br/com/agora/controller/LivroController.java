@@ -19,6 +19,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,7 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -67,12 +69,19 @@ public class LivroController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Livro>> listarLivros(
+    public ResponseEntity<Map<String, Object>> listarLivros(
             @RequestParam(name = "pagina", defaultValue = "0") int pagina,
             @RequestParam(name = "quantidade", defaultValue = "20") int quantidade) {
         PageRequest pageable = PageRequest.of(pagina, quantidade);
-        List<Livro> livros = livroService.getAllBooks(pageable);
-        return ResponseEntity.ok(livros);
+        Page<Livro> pageLivros = livroService.getAllBooks(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("livros", pageLivros.getContent());
+        response.put("totalItems", pageLivros.getTotalElements());
+        response.put("totalPages", pageLivros.getTotalPages());
+        response.put("currentPage", pageLivros.getNumber());
+
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Listar livros", description = "Retorna uma lista de todos os livros disponíveis")

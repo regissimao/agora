@@ -67,9 +67,8 @@ public class LivroService {
         return new CadastrarLivroResponse("Livro Cadastrado", livro);
     }
 
-    public List<Livro> getAllBooks(PageRequest pageable) {
-        Page<Livro> livros = livroRepository.findAll(pageable);
-        return livros.getContent();
+    public Page<Livro> getAllBooks(PageRequest pageable) {
+        return livroRepository.findAll(pageable);
     }
     
     public String uploadPdf(String isbnLivro, MultipartFile arquivo) throws IOException {
