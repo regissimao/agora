@@ -11,6 +11,8 @@ import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handl
 import { NgIf } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { OnlyNumbersDirective } from '../../directive/only-numbers.directive';
+import { routes } from '../../app.routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar-livro',
@@ -38,6 +40,7 @@ export class CadastrarLivroComponent {
 
 
   constructor(
+    private router: Router,
     private livroService: LivroService,
     private mensagensHandlerService: MensagensHandlerService,
     private snackBar: MatSnackBar
@@ -95,6 +98,7 @@ export class CadastrarLivroComponent {
           this.mensagensHandlerService.mostrarMensagemDeSucesso('Livro cadastrado com sucesso!');
           form.resetForm();
           this.resetFiles();
+          this.router.navigate(['/pagina-inicial']);
         },
         error: (erro) => {
           // Aqui você pode fazer a verificação de erros específicos
@@ -109,6 +113,15 @@ export class CadastrarLivroComponent {
     } else {
       this.snackBar.open('O ISBN deve ter exatamente 13 caracteres.', 'Fechar', { duration: 3000 });
     }
+  }
+
+  voltar() {
+    this.router.navigate(['/gerenciar-estoque']); // Atualize com a rota correta para a listagem de livros
+  }
+
+  limparFormulario(form: NgForm) {
+    form.resetForm();
+    this.resetFiles();
   }
 
   private resetFiles() {
