@@ -1,0 +1,35 @@
+<p>avaliacao-livro works!</p>
+<div>
+    <input type="hidden" [(ngModel)]="idLivro">
+    <h2>Avaliação de Livro</h2>
+    <div>
+        <label>Título do Livro:</label>
+        <input type="text" [(ngModel)]="livroTitulo">
+    </div>
+    <div>
+        <label>ISBN:</label>
+        <input type="text" [(ngModel)]="livroISBN">
+    </div>
+    <div>
+        <label>Autor:</label>
+        <input type="text" [(ngModel)]="livroAutor">
+    </div>
+    <div>
+        <label>Avaliar:</label>
+        <select [(ngModel)]="avaliar">
+            <option value="1">⭐️</option>
+            <option value="2">⭐️⭐️</option>
+            <option value="3">⭐️⭐️⭐️</option>
+            <option value="4">⭐️⭐️⭐️⭐️</option>
+            <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+        </select>
+    </div>
+    <div>
+        <label>Comentário:</label>
+        <textarea [(ngModel)]="comentario"></textarea>
+    </div>
+    <div>
+        <button (click)="voltar()">Voltar</button>
+        <button (click)="avaliar()">Avaliar</button>
+    </div>
+</div>

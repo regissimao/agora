@@ -1,0 +1,20 @@
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+
+  <h1>Seja bem vindo ao Ágora</h1>
+
+  <app-mensagens-handler></app-mensagens-handler>
+
+  <mat-form-field class="form-group">
+    <mat-label for="email">Email</mat-label>
+    <input matInput type="email" class="form-control" id="email" [(ngModel)]="usuario.email" name="email" required>
+  </mat-form-field>
+
+  <mat-form-field class="form-group">
+    <mat-label for="senha">Senha</mat-label>
+    <input matInput type="password" class="form-control" id="senha" [(ngModel)]="usuario.senha" name="senha" required>
+  </mat-form-field>
+
+  <button mat-button type="submit" class="btn btn-primary botao" style="color: white;">Entrar</button>
+
+  <a href="/esqueceu-senha" routerLink="/esqueceu-senha" routerLinkActive="router-link-active">Esqueceu a sua senha? Clique aqui para iniciar o processo de trocar a sua senha.</a>
+</form>
