@@ -4,9 +4,10 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntl } from '../../shared/custom-paginator-intl';
+import { Livro } from '../../model/livro.model';
 
 @Component({
   selector: 'app-gerenciar-estoque',
@@ -21,18 +22,21 @@ import { CustomPaginatorIntl } from '../../shared/custom-paginator-intl';
   templateUrl: './gerenciar-estoque.component.html',
   styleUrls: ['./gerenciar-estoque.component.css'],
   providers: [
-    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl } // Fornecer a classe personalizada
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }
   ]
 })
 export class GerenciarEstoqueComponent implements OnInit {
-  livros: any[] = [];
-  displayedColumns: string[] = ['titulo', 'autor', 'acoes'];
+  livros: Livro[] = [];
+  displayedColumns: string[] = ['titulo', 'autor','precoFisico', 'acoes', ];
   totalItems: number = 0;
   pageSize: number = 20;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private livroService: LivroService) {}
+  constructor(
+    private router: Router,
+    private livroService: LivroService
+  ) {}
 
   ngOnInit(): void {
     this.carregarLivros();
@@ -40,7 +44,7 @@ export class GerenciarEstoqueComponent implements OnInit {
 
   carregarLivros(pageIndex: number = 0, pageSize: number = 20) {
     this.livroService.listar(pageIndex, pageSize).subscribe((response: any) => {
-      this.livros = response.livros;
+      this.livros = response.livros.map((livroData: any) => new Livro(livroData));
       this.totalItems = response.totalItems;
       if (this.paginator) {
         this.paginator.pageIndex = pageIndex;
@@ -49,12 +53,12 @@ export class GerenciarEstoqueComponent implements OnInit {
     });
   }
 
-  editarLivro(livro: any) {
-    // Lógica para editar livro
+  editarLivro(livro: Livro) {
+    this.router.navigate(['/editar-livro', livro.id]);
   }
 
-  removerLivro(livro: any) {
-    this.livroService.remover(livro.id).subscribe(() => {
+  removerLivro(livro: Livro) {
+    this.livroService.remover(livro.id!).subscribe(() => {
       this.carregarLivros(this.paginator.pageIndex, this.paginator.pageSize);
     });
   }

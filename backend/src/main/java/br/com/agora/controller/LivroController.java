@@ -1,14 +1,8 @@
 package br.com.agora.controller;
 
-import br.com.agora.dto.request.BuscarPdfLivroRequest;
-import br.com.agora.dto.request.CadastrarLivroRequest;
-import br.com.agora.dto.request.RetornarLivroRequest;
-import br.com.agora.dto.request.PesquisaLivroRequest;
-import br.com.agora.dto.response.CadastrarLivroResponse;
-import br.com.agora.dto.response.RetornarDadosLivroResponse;
+import br.com.agora.dto.request.*;
+import br.com.agora.dto.response.*;
 import br.com.agora.entity.Livro;
-import br.com.agora.dto.response.ListarLivroResponse;
-import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.service.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -48,6 +42,22 @@ public class LivroController {
         CadastrarLivroResponse response = livroService.cadastrarLivro(request);
         return ResponseEntity.ok(response);
 
+    }
+
+    @Operation(summary = "Atualizar um livro", description = "Atualiza os detalhes de um livro existente")
+    @ApiResponse(responseCode = "200", description = "Livro atualizado com sucesso", content = @Content(schema = @Schema(implementation = CadastrarLivroResponse.class)))
+    @PutMapping("/atualizar")
+    public ResponseEntity<CadastrarLivroResponse> atualizarLivro(@ModelAttribute @Valid AtualizarLivroRequest request) throws IOException, ParseException {
+        CadastrarLivroResponse response = livroService.atualizarLivro(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Obter detalhes de um livro pelo ID", description = "Retorna os detalhes de um livro específico pelo ID")
+    @ApiResponse(responseCode = "200", description = "Detalhes do livro retornados com sucesso", content = @Content(schema = @Schema(implementation = RetornarDadosLivroResponse.class)))
+    @GetMapping("/{id}")
+    public ResponseEntity<ObterLivroResponse> obterLivroPorId(@PathVariable Long id) {
+        ObterLivroResponse response = livroService.obterLivroPorId(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/retornar-livro")

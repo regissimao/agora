@@ -28,7 +28,7 @@ public class RetornarDadosLivroResponse {
     
 	private Integer quantidadeEstoque;
 
-    private Date dataPublicacao;
+    private String dataPublicacao;
 
 	private String idioma;
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormBuilder, FormsModule, NgForm, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,12 +11,13 @@ import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handl
 import { NgIf } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { OnlyNumbersDirective } from '../../directive/only-numbers.directive';
-import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-cadastrar-livro',
   standalone: true,
+  providers: [provideNgxMask()],
   imports: [
     FormsModule,
     MatInputModule,
@@ -27,7 +28,9 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     NgIf,
     MatSnackBarModule,
-    OnlyNumbersDirective
+    OnlyNumbersDirective,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   templateUrl: './cadastrar-livro.component.html',
   styleUrls: ['./cadastrar-livro.component.css']
@@ -38,8 +41,8 @@ export class CadastrarLivroComponent {
   capaLivroError: string | null = null;
   pdfLivroError: string | null = null;
 
-
   constructor(
+    private fb: FormBuilder,
     private router: Router,
     private livroService: LivroService,
     private mensagensHandlerService: MensagensHandlerService,
@@ -80,10 +83,10 @@ export class CadastrarLivroComponent {
       formData.append('categoria', form.value.categoria);
       formData.append('sinopse', form.value.sinopse);
       formData.append('idioma', form.value.idioma);
-      formData.append('dataPublicacao', form.value.dataPublicacao);
+      formData.append('dataPublicacao', this.formatarDataSimples(form.value.dataPublicacao));
       formData.append('tipoLivro', form.value.tipoLivro);
       formData.append('precoDigital', form.value.precoDigital);
-      formData.append('precoFisico', form.value.precoFisico);
+      formData.append('precoFisico', form.value.precoFisico.replace('R$', '').replace(',', '').trim());
       formData.append('numeroPagina', form.value.numeroPagina);
       formData.append('quantidadeEstoque', form.value.quantidadeEstoque);
       if (this.capaLivro) {
@@ -101,7 +104,6 @@ export class CadastrarLivroComponent {
           this.router.navigate(['/pagina-inicial']);
         },
         error: (erro) => {
-          // Aqui você pode fazer a verificação de erros específicos
           console.log(erro);
           if (erro.status === 500) {
             this.mensagensHandlerService.mostrarMensagemDeErro('Erro desconhecido ao cadastrar livro');
@@ -116,7 +118,7 @@ export class CadastrarLivroComponent {
   }
 
   voltar() {
-    this.router.navigate(['/gerenciar-estoque']); // Atualize com a rota correta para a listagem de livros
+    this.router.navigate(['/gerenciar-estoque']);
   }
 
   limparFormulario(form: NgForm) {
@@ -129,5 +131,12 @@ export class CadastrarLivroComponent {
     this.arquivoDigital = null;
     this.capaLivroError = null;
     this.pdfLivroError = null;
+  }
+
+  formatarDataSimples(data: Date): string {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
   }
 }

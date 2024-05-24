@@ -1,15 +1,14 @@
 <div class="container">
   <mat-card>
     <div class="header">
-      <h2>Cadastrar Livro</h2>
+      <h2>Editar Livro</h2>
     </div>
-
-    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="cadastro-livro-form">
+    <form [formGroup]="livroForm" (ngSubmit)="onSubmit()" class="cadastro-livro-form">
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>ISBN</mat-label>
-          <input type="text" matInput name="isbn" maxlength="20" ngModel appOnlyNumbers required>
-          <mat-error *ngIf="form.submitted && form.controls['isbn']?.invalid">
+          <input type="text" matInput formControlName="isbn" maxlength="20" appOnlyNumbers required>
+          <mat-error *ngIf="livroForm.get('isbn')?.invalid">
             O ISBN é obrigatório.
           </mat-error>
         </mat-form-field>
@@ -18,57 +17,57 @@
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Nome</mat-label>
-          <input type="text" matInput name="titulo" ngModel required>
-          <mat-error *ngIf="form.submitted && form.controls['titulo']?.invalid">O Titulo é obrigatório</mat-error>
+          <input type="text" matInput formControlName="titulo" required>
+          <mat-error *ngIf="livroForm.get('titulo')?.invalid">O Título é obrigatório</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Autor</mat-label>
-          <input type="text" matInput name="autor" ngModel required>
-          <mat-error *ngIf="form.submitted && form.controls['autor']?.invalid">Autor é obrigatório</mat-error>
+          <input type="text" matInput formControlName="autor" required>
+          <mat-error *ngIf="livroForm.get('autor')?.invalid">Autor é obrigatório</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Editora</mat-label>
-          <input type="text" matInput name="editora" ngModel required>
-          <mat-error *ngIf="form.submitted && form.controls['editora']?.invalid">Editora é obrigatória</mat-error>
+          <input type="text" matInput formControlName="editora" required>
+          <mat-error *ngIf="livroForm.get('editora')?.invalid">Editora é obrigatória</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Categoria</mat-label>
-          <input type="text" matInput name="categoria" ngModel required>
-          <mat-error *ngIf="form.submitted && form.controls['categoria']?.invalid">Categoria é obrigatória</mat-error>
+          <input type="text" matInput formControlName="categoria" required>
+          <mat-error *ngIf="livroForm.get('categoria')?.invalid">Categoria é obrigatória</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Idioma</mat-label>
-          <input type="text" matInput name="idioma" ngModel required>
-          <mat-error *ngIf="form.submitted && form.controls['idioma']?.invalid">Idioma é obrigatório</mat-error>
+          <input type="text" matInput formControlName="idioma" required>
+          <mat-error *ngIf="livroForm.get('idioma')?.invalid">Idioma é obrigatório</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Sinopse</mat-label>
-          <textarea matInput name="sinopse" ngModel required></textarea>
-          <mat-error *ngIf="form.submitted && form.controls['sinopse']?.invalid">A Sinopse é obrigatória</mat-error>
+          <textarea matInput formControlName="sinopse" required></textarea>
+          <mat-error *ngIf="livroForm.get('sinopse')?.invalid">A Sinopse é obrigatória</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Data de Publicação</mat-label>
-          <input matInput [matDatepicker]="picker" name="dataPublicacao" ngModel required>
+          <input matInput [matDatepicker]="picker" formControlName="dataPublicacao" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="form.submitted && form.controls['dataPublicacao']?.invalid">Data de Publicação é obrigatória</mat-error>
+          <mat-error *ngIf="livroForm.get('dataPublicacao')?.invalid">Data de Publicação é obrigatória</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Tipo de Livro</mat-label>
-          <input type="text" matInput name="tipoLivro" ngModel required>
-          <mat-error *ngIf="form.submitted && form.controls['tipoLivro']?.invalid">Tipo de Livro é obrigatório</mat-error>
+          <input type="text" matInput formControlName="tipoLivro" required>
+          <mat-error *ngIf="livroForm.get('tipoLivro')?.invalid">Tipo de Livro é obrigatório</mat-error>
         </mat-form-field>
       </div>
 
@@ -83,32 +82,33 @@
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Número de Páginas</mat-label>
-          <input type="number" matInput name="numeroPagina" ngModel>
+          <input type="number" matInput formControlName="numeroPagina">
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Quantidade em Estoque</mat-label>
-          <input type="number" matInput name="quantidadeEstoque" ngModel>
+          <input type="number" matInput formControlName="quantidadeEstoque">
         </mat-form-field>
       </div>
 
-      <div class="form-row file-row">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="capaLivroAtual">Capa Atual do Livro</label>
+          <img [src]="capaLivroUrl" alt="Capa do Livro" style="max-width: 200px; display: block; margin-bottom: 10px;">
+        </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group file-input">
-          <label for="capaLivro">Capa do Livro</label>
-          <input type="file" id="capaLivro" (change)="onFileSelected('capaLivro', $event)" />
+          <label for="novaCapaLivro">Nova Capa do Livro</label>
+          <input type="file" id="novaCapaLivro" (change)="onFileSelected('capaLivro', $event)" />
           <span *ngIf="capaLivro">Arquivo selecionado: {{ capaLivro.name }}</span>
           <mat-error *ngIf="capaLivroError">{{ capaLivroError }}</mat-error>
-        </div>
-        <div class="form-group file-input">
-          <label for="arquivoDigital">PDF do Livro</label>
-          <input type="file" id="arquivoDigital" (change)="onFileSelected('arquivoDigital', $event)" />
-          <span *ngIf="arquivoDigital">Arquivo selecionado: {{ arquivoDigital.name }}</span>
-          <mat-error *ngIf="pdfLivroError">{{ pdfLivroError }}</mat-error>
         </div>
       </div>
 
       <div class="button-group">
         <button mat-raised-button color="warn" (click)="voltar()">Voltar</button>
-        <button type="submit" mat-raised-button color="primary">Cadastrar</button>
+        <button type="submit" mat-raised-button color="primary">Salvar</button>
       </div>
     </form>
   </mat-card>

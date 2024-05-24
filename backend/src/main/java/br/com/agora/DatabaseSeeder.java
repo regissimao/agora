@@ -35,7 +35,7 @@ public class DatabaseSeeder {
                 testUser.setSenha("senha123");
 
                 usuarioRepository.save(testUser);
-                log.info(String.format("Usuário de teste criado: %s", testUser.getEmail()));
+                log.info(String.format("Usuário de teste criado email: %s senha: %s", testUser.getEmail(), testUser.getSenha()));
             }
         };
     }

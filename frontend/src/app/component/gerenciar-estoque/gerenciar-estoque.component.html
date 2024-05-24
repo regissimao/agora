@@ -13,6 +13,11 @@
       <td mat-cell *matCellDef="let livro"> {{livro.autor}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="precoFisico">
+      <th mat-header-cell *matHeaderCellDef> Preço Fisico </th>
+      <td mat-cell *matCellDef="let livro"> {{livro.precoFisico}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td mat-cell *matCellDef="let livro">
