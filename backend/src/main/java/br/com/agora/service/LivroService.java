@@ -24,8 +24,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -54,14 +52,9 @@ public class LivroService {
     }
 
     public CadastrarLivroResponse cadastrarLivro(CadastrarLivroRequest livroRequest) throws IOException {
-        Date data;
+        Date data = livroRequest.getDataPublicacao();
         String pathCapa = uploadCapa(livroRequest.getIsbn(), livroRequest.getCapaLivro());
         String pathPdf = uploadPdf(livroRequest.getIsbn(), livroRequest.getArquivoDigital());
-        try {
-            data = new SimpleDateFormat("yyyy-MM-dd").parse(livroRequest.getDataPublicacao());
-        } catch (ParseException e) {
-            throw new BadRequestException(" Data de publicação inválida. Formato esperado: yyyy-MM-dd");
-        }
 
         Livro livro = livroRepository.save(new Livro(livroRequest, pathCapa, pathPdf, data));
         return new CadastrarLivroResponse("Livro Cadastrado", livro);

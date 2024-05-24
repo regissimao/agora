@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './component/login/login.component';
 import {NavigationComponent} from "./navigation/navigation.component";
+import {MensagensHandlerComponent} from "./mensagens-handler/mensagens-handler.component";
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ import {NavigationComponent} from "./navigation/navigation.component";
     HttpClientModule,
     FontAwesomeModule,
     LoginComponent,
-    NavigationComponent
+    NavigationComponent,
+    MensagensHandlerComponent
   ],
   providers: [],
   templateUrl: './app.component.html',

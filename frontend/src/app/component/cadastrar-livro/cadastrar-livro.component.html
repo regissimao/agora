@@ -60,7 +60,9 @@
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Data de Publicação</mat-label>
-          <input type="date" matInput name="dataPublicacao" ngModel required>
+          <input matInput [matDatepicker]="picker" name="dataPublicacao" ngModel required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="form.submitted && form.controls['dataPublicacao']?.invalid">Data de Publicação é obrigatória</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">

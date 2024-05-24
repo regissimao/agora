@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+
 @Data
 public class CadastrarLivroRequest {
     @NotNull(message = "Capa do livro não pode ser nulo")
@@ -28,7 +30,7 @@ public class CadastrarLivroRequest {
     @NotBlank(message = "Idioma deve ser informado")
     private String idioma;
     @NotNull(message = "Data deve ser informada")
-    private String dataPublicacao;
+    private Date dataPublicacao;
     @NotBlank(message = "Tipo deve ser informado")
     private String tipoLivro;
     private Double precoDigital;
