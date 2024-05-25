@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Pedido } from './entidades.model';
 import { environment } from '../../enviroments/enviroments';
 
@@ -14,7 +15,7 @@ export class PedidoService {
     private http: HttpClient
   ) { }
 
-  obterPedido(pedido: Pedido) {
-    return this.http.get<Pedido>(`${SERVER_URL}/pedido/obter/${pedido.id}`);
+  obterPedido(id: number): Observable<Pedido> {
+    return this.http.get<Pedido>(`${SERVER_URL}/pedido/obter/${id}`);
   }
 }

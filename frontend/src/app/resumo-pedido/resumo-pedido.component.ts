@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -39,73 +39,29 @@ import { EnderecoComponent } from '../../componentes/endereco/endereco.component
   templateUrl: './resumo-pedido.component.html',
   styleUrls: ['./resumo-pedido.component.css'],
 })
-export class ResumoPedidoComponent {
+export class ResumoPedidoComponent implements OnInit {
   @Output() logado = new EventEmitter<boolean>();
 
-  pedido: Pedido;
+  pedido!: Pedido;
 
   constructor(
     private router: Router,
     private mensagensHandlerService: MensagensHandlerService,
     private pedidoService: PedidoService,
     private logadoService: LogadoService
-  ) {
-    this.pedido = {
-      id: 1,
-      dataPedido: new Date('2023-05-21'),
-      preco: 150.50,
-      quantidade: 3,
-      prazoEntrega: new Date('2023-06-01'),
-      dataEntrega: new Date('2023-06-05'),
-      observacao: "Entregar no período da tarde.",
-      statusEntrega: "Pendente",
-      valorFrete: "20.00",
-      endereco: [
-        {
-          logradouro: "Rua das Flores",
-          numero: "123",
-          cidade: "São Paulo",
-          cep: "01001-000",
-          complemento: "Apt 45",
-          estado: "SP"
-        }
-      ],
-      usuario: [
-        {
-          email: "usuario@exemplo.com",
-          senha: "senha123"
-        }
-      ],
-      pagamento: [
-        {
-          id: 1,
-          status: true,
-          tipo: true,
-          dataPedido: new Date('2023-05-21')
-        }
-      ],
-      livro: [
-        {
-          id: 1,
-          isbn: "978-3-16-148410-0",
-          titulo: "O Grande Livro",
-          autor: "João da Silva",
-          sinopse: "Um livro incrível sobre grandes aventuras.",
-          editora: "Editora Exemplo",
-          idioma: "Português",
-          categoria: "Ficção",
-          numeroPagina: 320,
-          dataPublicacao: new Date('2020-01-15'),
-          precoFisico: 50.00,
-          quantidadeEstoque: 10,
-          arquivoDigital: "url_para_arquivo_digital",
-          precoDigital: 30.00,
-          capaLivro: "url_para_imagem_capa",
-          tipoLivro: "Físico"
-        }
-      ]
-    };
-    
+  ) {}
+
+  ngOnInit() {
+    const pedidoId = 3; // Testando pedido
+    this.pedidoService.obterPedido(pedidoId).subscribe(
+      (pedido) => {
+        this.pedido = pedido;
+      },
+      (erro) => {
+        console.error(erro);
+        this.mensagensHandlerService.mostrarMensagemDeErro('Erro ao carregar o pedido.');
+      }
+    );
   }
 
   get total(): string {
@@ -142,7 +98,7 @@ export class ResumoPedidoComponent {
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      this.pedidoService.obterPedido(this.pedido).subscribe(
+      this.pedidoService.obterPedido(this.pedido.id).subscribe(
         (pedido) => {
           this.logadoService.informarLogado(true);
           this.router.navigate(['/pagina-inicial']);
@@ -156,7 +112,7 @@ export class ResumoPedidoComponent {
       );
     } else {
       this.mensagensHandlerService.mostrarMensagemDeErro(
-        'Preecha os campos obrigatórios'
+        'Preencha os campos obrigatórios'
       );
     }
   }

@@ -1,7 +1,7 @@
 <div class="resumo-pedido-container">
   <h1 class="title">Resumo pedido</h1>
 
-  <div class="book-summary" *ngIf="pedido.livro.length > 0">
+  <div class="book-summary" *ngIf="pedido && pedido.livro.length > 0">
     <img [src]="pedido.livro[0].capaLivro" alt="Imagem do Livro" class="book-image" />
 
     <div class="book-details">
