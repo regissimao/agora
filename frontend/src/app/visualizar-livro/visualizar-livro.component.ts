@@ -41,10 +41,13 @@ import { EnderecoComponent } from '../../componentes/endereco/endereco.component
 })
 export class VisualizarLivroComponent implements OnInit {
   @Output() logado = new EventEmitter<boolean>();
-
   readonly API_URL = 'http://localhost:8080/api/livro/';
-
   livro?: Livro;
+  avaliacoes = [
+    { nome: 'Regis Simão', data: new Date(), comentario: 'Excelente livro, muito interessante.', avatarUrl: 'https://picsum.photos/40/40?random=1' },
+    { nome: 'Osiris de Castro', data: new Date(), comentario: 'Gostei bastante, recomendo a leitura.', avatarUrl: 'https://picsum.photos/40/40?random=2' },
+    { nome: 'Manel', data: new Date(), comentario: 'Muito bom, conteúdo muito rico.', avatarUrl: 'https://picsum.photos/40/40?random=3' }
+  ];
 
   constructor(
     private router: Router,
@@ -54,7 +57,7 @@ export class VisualizarLivroComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const isbn = "978-3-16";
+    const isbn = '978-3-16'; // substitua pelo ISBN correto
     this.livroService.retornarLivro(isbn).subscribe(
       (livro) => {
         this.livro = livro;

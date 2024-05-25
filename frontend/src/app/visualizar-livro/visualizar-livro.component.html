@@ -9,6 +9,8 @@
         <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
         <p><strong>Data de Publicação:</strong> {{ livro.dataPublicacao | date }}</p>
         <p><strong>Sinopse:</strong> {{ livro.sinopse }}</p>
+        <p><strong>Preço Digital:</strong> {{ livro.precoDigital | currency:'BRL' }}</p>
+        <p><strong>Preço Físico:</strong> {{ livro.precoFisico | currency:'BRL' }}</p>
         <div class="acoes">
           <button mat-raised-button color="primary">Adicionar ao Carrinho</button>
           <button mat-raised-button color="accent">Comprar Agora</button>
@@ -18,7 +20,22 @@
     <mat-divider></mat-divider>
     <div class="avaliacoes">
       <h3>Avaliações</h3>
-      <!-- Lista de avaliações -->
+      <mat-card *ngFor="let avaliacao of avaliacoes" class="avaliacao-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image">
+            <img mat-card-avatar [src]="avaliacao.avatarUrl" alt="Avatar" class="avatar-image">
+          </div>
+          <mat-card-title>{{ avaliacao.nome }}</mat-card-title>
+          <mat-card-subtitle>{{ avaliacao.data | date }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ avaliacao.comentario }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>REPLY</button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </div>
   
