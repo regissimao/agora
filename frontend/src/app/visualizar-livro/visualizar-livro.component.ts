@@ -42,6 +42,8 @@ import { EnderecoComponent } from '../../componentes/endereco/endereco.component
 export class VisualizarLivroComponent implements OnInit {
   @Output() logado = new EventEmitter<boolean>();
 
+  readonly API_URL = 'http://localhost:8080/api/livro/';
+
   livro?: Livro;
 
   constructor(
@@ -52,7 +54,7 @@ export class VisualizarLivroComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const isbn = "1234567891111";
+    const isbn = "978-3-16";
     this.livroService.retornarLivro(isbn).subscribe(
       (livro) => {
         this.livro = livro;

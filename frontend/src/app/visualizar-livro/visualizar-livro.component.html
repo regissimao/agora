@@ -1,7 +1,7 @@
 <div *ngIf="livro" class="visualizar-livro-container">
     <div class="livro-detalhes">
       <div class="livro-imagem">
-        <img [src]="livro.arquivoDigital" alt="Capa do Livro" />
+        <img [src]="API_URL + livro.isbn + '/downloadCapa'" alt="Capa do Livro" style="max-width: 200px; display: block; margin-bottom: 10px;">
       </div>
       <div class="livro-info">
         <h2>{{ livro.titulo }}</h2>
