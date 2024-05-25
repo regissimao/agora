@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
+import { LivrosCompradosComponent } from './livros-comprados/livros-comprados.component';
 
 @Component({
   selector: 'app-root',

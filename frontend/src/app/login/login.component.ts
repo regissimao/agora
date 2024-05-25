@@ -49,17 +49,18 @@ export class LoginComponent {
       this.usuarioService.logar(this.usuario).subscribe(
         (usuario) => {
           this.logadoService.informarLogado(true);
-          this.router.navigate(['/pagina-inicial']);
+         // this.router.navigate(['/pagina-inicial']);
+          this.router.navigate(['/livros-comprados']);
           form.reset();
         },
         (erro) => {
-          console.log(erro);
+          console.log(`eeor`+erro);
           console.log(erro.error.titulo);
           this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo);
         }
       );
     } else {
-      this.mensagensHandlerService.mostrarMensagemDeErro('Preecha os campor de email e senha');
+      this.mensagensHandlerService.mostrarMensagemDeErro('Preecha os campo de email e senha');
     }
   }
 

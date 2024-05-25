@@ -7,6 +7,7 @@ import br.com.agora.dto.request.PesquisaLivroRequest;
 import br.com.agora.dto.response.CadastrarLivroResponse;
 import br.com.agora.dto.response.RetornarDadosLivroResponse;
 import br.com.agora.entity.Livro;
+import br.com.agora.repository.LivroRepository;
 import br.com.agora.dto.response.ListarLivroResponse;
 import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.service.LivroService;
@@ -30,13 +31,16 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.util.List;
 
+
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/livro")
 @RequiredArgsConstructor
 @Tag(name = "LivroController", description = "Controller para operações de livros")
 public class LivroController {
 
     private final LivroService livroService;
+    private final LivroRepository livroRepository;
 
     @Operation(summary = "Cadastrar um novo livro", description = "Cadastra um novo livro e retorna os detalhes do livro cadastrado")
     @ApiResponse(responseCode = "200", description = "Livro cadastrado com sucesso", content = @Content(schema = @Schema(implementation = CadastrarLivroResponse.class)))
@@ -87,4 +91,17 @@ public class LivroController {
     public ResponseEntity<PesquisaLivroResponse> pesquisarLivros(@RequestBody PesquisaLivroRequest request) {
         return ResponseEntity.ok(livroService.pesquisarLivros(request.getTermoPesquisa()));
     }
+
+
+    @GetMapping("/meusLivros/{codUser}")
+	public List<Livro> findByUsuarioId(@PathVariable int codUser){
+		return livroRepository.searchMyBooks(codUser);
+	}
+
+    @GetMapping("/meusLivros/")
+	public List<Livro> findAll(){
+		return livroRepository.findAll();
+	}
+
+
 }

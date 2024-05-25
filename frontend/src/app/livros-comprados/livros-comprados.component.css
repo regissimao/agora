@@ -1,0 +1,56 @@
+.livro-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .livro-imagem {
+    margin-right: 20px;
+    width: 100px; 
+    height: 150px; 
+    object-fit: cover; 
+  }
+  
+  .livro-detalhes {
+    flex: 1;
+  }
+  
+  .titulo-digital {
+    display: flex;
+    align-items: center;
+  }
+  
+  .titulo-digital h3 {
+    margin-right: 10px; 
+  }
+  
+  .titulo-digital p {
+    margin: 0;
+  }
+
+.botoes-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .botoes-container button {
+    padding: 5px 20px;
+    cursor: pointer;
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .botoes-container button:hover {
+    background-color: #45a049; 
+  }
+  
+
+  .botoes-container button:active {
+    background-color: #3e8e41; 
+  }
+  

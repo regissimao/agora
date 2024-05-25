@@ -3,6 +3,8 @@ package br.com.agora.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.agora.dto.request.CadastrarLivroRequest;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +24,7 @@ public class Livro {
 	@Column(name = "isbn", nullable = false, length = 13)
 	private String isbn;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
 	private List<Usuario> usuarios;
 
@@ -66,6 +69,7 @@ public class Livro {
 	@Column(name = "tipo_livro")
 	private String tipoLivro;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "livro", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 

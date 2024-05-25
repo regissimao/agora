@@ -1,0 +1,17 @@
+<div *ngFor="let livro of listaLivros" class="livro-container">
+    <img [src]="livro.capaLivro" alt="{{ livro.titulo }} - Capa do livro" class="livro-imagem">
+    <div class="livro-detalhes">
+      <div class="titulo-digital">
+        <h3>Título: {{ livro.titulo }}</h3>
+        <p>Digital: <input type="checkbox" [checked]="livro.tipoLivro === 'Digital'"></p>
+      </div>
+      <p>ISBN: {{ livro.isbn }}</p>
+      <p>Digital: {{ livro.tipoLivro }}</p>
+      <p>Preço: {{ livro.precoDigital }}</p>
+      <div class="botoes-container">
+        <button>Avaliar</button>
+        <button>Rastrear</button>
+      </div>
+    </div>
+  </div>
+  
