@@ -33,6 +33,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/livro")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @Tag(name = "LivroController", description = "Controller para operações de livros")
 public class LivroController {
 
@@ -46,11 +47,10 @@ public class LivroController {
         return ResponseEntity.ok(response);
 
     }
-
-    @GetMapping("/retornar-livro")
-    public ResponseEntity<RetornarDadosLivroResponse> retornarDadosLivro(@RequestBody @Valid RetornarLivroRequest request) throws IOException, ParseException {
+    @GetMapping("/retornar-livro/{isbn}")
+    public ResponseEntity<RetornarDadosLivroResponse> retornarDadosLivro(@PathVariable String isbn) {
         
-        RetornarDadosLivroResponse response = livroService.retornarDadosLivro(request.getIsbn());
+        RetornarDadosLivroResponse response = livroService.retornarDadosLivro(isbn);
 
         return ResponseEntity.ok(response);
     }
