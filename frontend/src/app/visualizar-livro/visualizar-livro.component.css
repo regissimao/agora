@@ -1,0 +1,50 @@
+.visualizar-livro-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .livro-detalhes {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .livro-imagem img {
+    width: 200px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 20px;
+  }
+  
+  .livro-info {
+    flex: 1;
+  }
+  
+  .livro-info h2 {
+    margin-top: 0;
+  }
+  
+  .livro-info p {
+    margin: 5px 0;
+  }
+  
+  .acoes {
+    margin-top: 10px;
+  }
+  
+  .acoes button {
+    margin-right: 10px;
+  }
+  
+  .avaliacoes {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  

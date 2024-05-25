@@ -33,6 +33,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/livro")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @Tag(name = "LivroController", description = "Controller para operações de livros")
 public class LivroController {
 

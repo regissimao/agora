@@ -1,0 +1,24 @@
+<div *ngIf="livro" class="visualizar-livro-container">
+    <div class="livro-detalhes">
+      <div class="livro-imagem">
+        <img [src]="livro.arquivoDigital" alt="Capa do Livro" />
+      </div>
+      <div class="livro-info">
+        <h2>{{ livro.titulo }}</h2>
+        <p><strong>Autor:</strong> {{ livro.autor }}</p>
+        <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
+        <p><strong>Data de Publicação:</strong> {{ livro.dataPublicacao | date }}</p>
+        <p><strong>Sinopse:</strong> {{ livro.sinopse }}</p>
+        <div class="acoes">
+          <button mat-raised-button color="primary">Adicionar ao Carrinho</button>
+          <button mat-raised-button color="accent">Comprar Agora</button>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="avaliacoes">
+      <h3>Avaliações</h3>
+      <!-- Lista de avaliações -->
+    </div>
+  </div>
+  

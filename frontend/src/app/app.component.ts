@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './login/login.component';
 import { ResumoPedidoComponent } from './resumo-pedido/resumo-pedido.component';
 import { QuantidadeComponent } from '../componentes/quantidade/quantidade.component';
+import {VisualizarLivroComponent } from './visualizar-livro/visualizar-livro.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ import { QuantidadeComponent } from '../componentes/quantidade/quantidade.compon
     FontAwesomeModule,
     LoginComponent,
     ResumoPedidoComponent,
-    QuantidadeComponent
+    QuantidadeComponent,
+    VisualizarLivroComponent
   ],
   providers: [],
   templateUrl: './app.component.html',
