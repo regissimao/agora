@@ -42,7 +42,7 @@ import { EnderecoComponent } from '../../componentes/endereco/endereco.component
 export class ResumoPedidoComponent implements OnInit {
   @Output() logado = new EventEmitter<boolean>();
 
-  pedido!: Pedido;
+  pedido?: Pedido;
 
   constructor(
     private router: Router,
@@ -52,10 +52,11 @@ export class ResumoPedidoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const pedidoId = 3; // Testando pedido
+    const pedidoId = 3; // Replace with the actual ID you need to fetch
     this.pedidoService.obterPedido(pedidoId).subscribe(
       (pedido) => {
         this.pedido = pedido;
+        console.log(pedido);
       },
       (erro) => {
         console.error(erro);
@@ -65,23 +66,30 @@ export class ResumoPedidoComponent implements OnInit {
   }
 
   get total(): string {
-    let valorTotal = Number(this.pedido.preco) * this.pedido.quantidade;
+    if (!this.pedido) {
+      return 'R$0';
+    }
+    let valorTotal = Number(this.pedido.preco) * 1;
     return valorTotal === 0 ? valorTotal.toString() : `R$${valorTotal}`;
   }
 
   adicionarNovoEndereco() {
-    this.pedido.endereco.push({
-      logradouro: '',
-      numero: '',
-      cidade: '',
-      cep: '',
-      complemento: '',
-      estado: '',
-    });
+    if (this.pedido) {
+      this.pedido.endereco.push({
+        logradouro: '',
+        numero: 0,
+        cidade: '',
+        cep: '',
+        complemento: '',
+        estado: '',
+      });
+    }
   }
 
   removerEndereco(index: number) {
-    this.pedido.endereco.splice(index, 1);
+    if (this.pedido) {
+      this.pedido.endereco.splice(index, 1);
+    }
   }
 
   voltar() {
@@ -97,7 +105,7 @@ export class ResumoPedidoComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
+    if (form.valid && this.pedido) {
       this.pedidoService.obterPedido(this.pedido.id).subscribe(
         (pedido) => {
           this.logadoService.informarLogado(true);

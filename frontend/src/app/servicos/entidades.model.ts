@@ -5,54 +5,58 @@ export class Usuario {
 }
 
 
-export class Pedido {
-  id: number = 0;
-  dataPedido: Date = new Date();
-  preco: number = 0;
-  quantidade: number = 0;
-  prazoEntrega: Date = new Date();
-  dataEntrega: Date = new Date();
-  observacao: string = "";
-  statusEntrega: string = "";
-  valorFrete: string = "";
-  endereco: Endereco[] = [];
-  usuario: Usuario[] = [];
-  pagamento: Pagamento[] = [];
-  livro: Livro[] = [];
+export interface Endereco {
+  logradouro: string;
+  numero: number;
+  cidade: string;
+  cep: string;
+  complemento: string;
+  estado: string;
 }
 
-export class Pagamento {
-  id: number = 0;
-  status: boolean = false;
-  tipo: boolean = false;
-  dataPedido: Date = new Date();
+export interface Livro {
+  id: number;
+  isbn: string;
+  titulo: string;
+  autor: string;
+  sinopse: string;
+  editora: string;
+  idioma: string;
+  categoria: string;
+  numeroPagina: number;
+  dataPublicacao: Date;
+  precoFisico: number;
+  quantidadeEstoque: number;
+  arquivoDigital: string;
+  precoDigital: number;
+  capaLivro: string;
+  tipoLivro: string;
 }
 
-export class Livro {
-  id: number = 0;
-  isbn: string = "";
-  titulo: string = "";
-  autor: string = "";
-  sinopse: string = "";
-  editora: string = "";
-  idioma: string = "";
-  categoria: string = "";
-  numeroPagina: number = 0;
-  dataPublicacao: Date = new Date();
-  precoFisico: number = 0;
-  quantidadeEstoque: number = 0;
-  arquivoDigital: string = "";
-  precoDigital: number = 0;
-  capaLivro: string = "";
-  tipoLivro: string = "";
+export interface Usuario {
+  id: number;
+  email: string;
+  senha: string;
 }
 
+export interface Pagamento {
+  id: number;
+  status: boolean;
+  tipo: boolean;
+  dataPedido: Date;
+}
 
-class Endereco{
-  logradouro: string = "";
-  numero: string = "";
-  cidade: string = "";
-  cep: string = "";
-  complemento: string = "";
-  estado: string = "";
+export interface Pedido {
+  id: number;
+  dataPedido: Date;
+  preco: number;
+  prazoEntrega: Date;
+  dataEntrega: Date;
+  endereco: Endereco[];
+  observacao: string;
+  statusEntrega: string;
+  valorFrete: string;
+  livro: Livro;
+  usuario: Usuario;
+  pagamento: Pagamento;
 }
