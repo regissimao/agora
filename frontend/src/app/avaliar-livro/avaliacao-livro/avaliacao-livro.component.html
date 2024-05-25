@@ -1,35 +1,14 @@
 <p>avaliacao-livro works!</p>
-<div>
-    <input type="hidden" [(ngModel)]="idLivro">
-    <h2>Avaliação de Livro</h2>
-    <div>
-        <label>Título do Livro:</label>
-        <input type="text" [(ngModel)]="livroTitulo">
-    </div>
-    <div>
-        <label>ISBN:</label>
-        <input type="text" [(ngModel)]="livroISBN">
-    </div>
-    <div>
-        <label>Autor:</label>
-        <input type="text" [(ngModel)]="livroAutor">
-    </div>
-    <div>
-        <label>Avaliar:</label>
-        <select [(ngModel)]="avaliar">
-            <option value="1">⭐️</option>
-            <option value="2">⭐️⭐️</option>
-            <option value="3">⭐️⭐️⭐️</option>
-            <option value="4">⭐️⭐️⭐️⭐️</option>
-            <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
-        </select>
-    </div>
-    <div>
-        <label>Comentário:</label>
-        <textarea [(ngModel)]="comentario"></textarea>
-    </div>
-    <div>
-        <button (click)="voltar()">Voltar</button>
-        <button (click)="avaliar()">Avaliar</button>
-    </div>
+<div *ngFor="let livro of livros" class="livro-item">
+    <h3>{{ livro.livroTitulo }}</h3>
+    <p>ISBN: {{ livro.livroISBN }}</p>
+    <p>Autor: {{ livro.livroAutor }}</p>
+    <p>Avaliação: {{ livro.avaliar }}</p>
+    <p>Comentário: {{ livro.comentario }}</p>
+    <form (submit)="submitAvaliacao(livro, isbnInput.value)">
+        <input type="number" min="1" max="5" [(ngModel)]="livro.avaliar" placeholder="Avaliação">
+        <textarea [(ngModel)]="livro.comentario" placeholder="Comentário"></textarea>
+        <input type="text" #isbnInput placeholder="ISBN">
+        <button type="submit">Salvar Avaliação</button>
+    </form>
 </div>

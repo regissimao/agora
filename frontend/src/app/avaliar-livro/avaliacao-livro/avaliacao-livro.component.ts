@@ -1,32 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { Livro } from '../livro'; 
 
 @Component({
-  selector: 'app-avaliacao-livro',
-  standalone: true,
-  imports: [],
-  templateUrl: './avaliacao-livro.component.html',
-  styleUrl: './avaliacao-livro.component.css'
+  selector: 'app-livro-lista',
+  templateUrl: './livro-lista.component.html',
+  styleUrls: ['./livro-lista.component.css']
 })
-export class AvaliacaoLivroComponent implements OnInit{
-  idLivro: string = '';
-  livroTitulo: string = '';
-  livroISBN: string = '';
-  livroAutor: string = '';
-  avaliar: number = 1;
-  comentario: string = '';
+export class LivroListaComponent implements OnInit {
+  livros: Livro[] = []; 
 
-  constructor(private route: ActivatedRoute, private router: Route) {}
+  constructor() { }
 
   ngOnInit(): void {
-      this.route.queryParams.subscribe(params => {
-          this.idLivro = params['idLivro'];
-      });
-  }
-  voltar(){
     
   }
-  avaliarLivro(){
 
+  submitAvaliacao(livro: Livro, isbn: string): void {
+    console.log('ISBN:', isbn);
   }
 }
