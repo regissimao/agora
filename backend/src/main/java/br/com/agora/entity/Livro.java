@@ -3,6 +3,8 @@ package br.com.agora.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.agora.dto.request.CadastrarLivroRequest;
 import jakarta.persistence.*;
 import lombok.*;
@@ -66,6 +68,7 @@ public class Livro {
 	private String tipoLivro;
 	
 	@OneToMany(mappedBy = "livro", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Pedido> pedidos;
 
 	public Livro(CadastrarLivroRequest livroRequest, String pathCapa, String pathPdf) {

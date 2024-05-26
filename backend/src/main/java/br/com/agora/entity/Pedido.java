@@ -1,8 +1,10 @@
 package br.com.agora.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +39,8 @@ public class Pedido {
     @Column(name = "data_entrega")
     private Date dataEntrega;
 
-    private String endereco;
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<Endereco> endereco;
 
     private String observacao;
 
@@ -47,7 +50,7 @@ public class Pedido {
     @Column(name = "valor_frete")
     private String valorFrete;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Livro livro;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,5 +58,4 @@ public class Pedido {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Pagamento pagamento;
-
 }

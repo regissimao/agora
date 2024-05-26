@@ -3,6 +3,8 @@ package br.com.agora.controller;
 import br.com.agora.dto.request.*;
 import br.com.agora.dto.response.*;
 import br.com.agora.entity.Livro;
+import br.com.agora.dto.response.ListarLivroResponse;
+import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.service.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -60,7 +62,6 @@ public class LivroController {
         ObterLivroResponse response = livroService.obterLivroPorId(id);
         return ResponseEntity.ok(response);
     }
-
     @GetMapping("/retornar-livro/{isbn}")
     public ResponseEntity<RetornarDadosLivroResponse> retornarDadosLivro(@PathVariable String isbn) {
 

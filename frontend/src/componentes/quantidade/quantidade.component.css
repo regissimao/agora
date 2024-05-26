@@ -1,0 +1,31 @@
+.quantidade-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.quantidade-container button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  border: none;
+}
+
+.quantidade-container button:hover {
+  background-color: #e0e0e0;
+}
+
+.quantidade-container input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 0 5px;
+  box-sizing: border-box;
+}
