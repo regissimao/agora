@@ -101,14 +101,14 @@ export class CadastrarLivroComponent {
           this.mensagensHandlerService.mostrarMensagemDeSucesso('Livro cadastrado com sucesso!');
           form.resetForm();
           this.resetFiles();
-          this.router.navigate(['/pagina-inicial']);
+          this.router.navigate(['/gerenciar-estoque']);
         },
         error: (erro) => {
           console.log(erro);
-          if (erro.status === 500) {
-            this.mensagensHandlerService.mostrarMensagemDeErro('Erro desconhecido ao cadastrar livro');
+          if (!erro.error) {
+            this.mensagensHandlerService.mostrarMensagemDeErro('Erro desconhecido ao cadastrar livro' || erro);
           } else {
-            this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo || 'Erro ao cadastrar livro');
+            this.mensagensHandlerService.mostrarMensagemDeErro(erro.error || 'Erro ao cadastrar livro');
           }
         }
       });

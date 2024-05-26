@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,6 +50,7 @@ public class LivroService {
         return new PesquisaLivroResponse(livroVOs);
     }
 
+    @Transactional
     public CadastrarLivroResponse cadastrarLivro(CadastrarLivroRequest livroRequest) throws IOException {
         String pathCapa = uploadCapa(livroRequest.getIsbn(), livroRequest.getCapaLivro());
         String pathPdf = uploadPdf(livroRequest.getIsbn(), livroRequest.getArquivoDigital());
@@ -64,15 +66,15 @@ public class LivroService {
             throw new BadRequestException("Livro não encontrado");
         }
 
-//        String pathCapa = livroExistente.getCapaLivro();
-//        if (livroRequest.getCapaLivro() != null && !livroRequest.getCapaLivro().isEmpty()) {
-//            pathCapa = uploadCapa(livroRequest.getIsbn(), livroRequest.getCapaLivro());
-//        }
-//
-//        String pathPdf = livroExistente.getArquivoDigital();
-//        if (livroRequest.getArquivoDigital() != null && !livroRequest.getArquivoDigital().isEmpty()) {
-//            pathPdf = uploadPdf(livroRequest.getIsbn(), livroRequest.getArquivoDigital());
-//        }
+        String pathCapa = livroExistente.getCapaLivro();
+        if (livroRequest.getCapaLivro() != null && !livroRequest.getCapaLivro().isEmpty()) {
+            pathCapa = uploadCapa(livroRequest.getIsbn(), livroRequest.getCapaLivro());
+        }
+
+        String pathPdf = livroExistente.getArquivoDigital();
+        if (livroRequest.getArquivoDigital() != null && !livroRequest.getArquivoDigital().isEmpty()) {
+            pathPdf = uploadPdf(livroRequest.getIsbn(), livroRequest.getArquivoDigital());
+        }
 
         livroExistente.setTitulo(livroRequest.getTitulo());
         livroExistente.setAutor(livroRequest.getAutor());
@@ -116,6 +118,8 @@ public class LivroService {
         return salvarArquivo(diretorios.getPathCapa(), fileName, arquivo);
     }
 
+
+
     public Resource downloadCapa(String isbn) throws MalformedURLException {
 
         Livro livro = livroRepository.findByIsbn(isbn);
@@ -128,6 +132,19 @@ public class LivroService {
         
         return new UrlResource(path.toUri());
 
+    }
+
+    public Resource downloadPdf(String isbn) throws MalformedURLException {
+
+        Livro livro = livroRepository.findByIsbn(isbn);
+
+        if (livro == null){
+            throw new BadRequestException("Livro não encontrado");
+        }
+
+        Path path = Paths.get(livro.getArquivoDigital());
+
+        return new UrlResource(path.toUri());
     }
 
 
@@ -157,4 +174,13 @@ public class LivroService {
     }
 
 
+    public RemoverLivroResponse removerLivro(Long id) {
+
+        Livro livro = livroRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Livro não encontrado"));
+        livroRepository.delete(livro);
+
+        return new RemoverLivroResponse("livro removido com sucesso");
+
+    }
 }

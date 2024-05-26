@@ -4,9 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class AtualizarLivroRequest {
+    private MultipartFile arquivoDigital;
+    private MultipartFile capaLivro;
     @NotBlank(message = "ISBN deve ser informado. Você é informou: ${validatedValue}")
     @Size(min = 13, max = 13, message = "ISBN deve ter {max} caracteres.")
     private String isbn;

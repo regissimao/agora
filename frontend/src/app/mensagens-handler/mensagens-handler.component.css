@@ -1,18 +1,37 @@
-
 .success {
-  background-color: #036644;
+  background-color: #4caf50;
   color: #fff;
   margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 4px;
 }
 
 .danger {
-  background-color: #a30303;
+  background-color: #f44336;
   color: #fff;
   margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 4px;
 }
 
 .warning {
-  background-color: #ffd900;
-  color: #655100;
+  background-color: #ff9800;
+  color: #fff;
   margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.sd.alert.icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sd.alert.icon span {
+  margin-right: 10px;
+}
+
+.sd.alert.icon div {
+  flex: 1;
 }

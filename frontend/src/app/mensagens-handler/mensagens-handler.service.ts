@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Mensagem } from './mensagem.model';
 
@@ -8,35 +8,40 @@ import { Mensagem } from './mensagem.model';
   providedIn: 'root'
 })
 export class MensagensHandlerService {
-
-  mensagemDeErroEmiter = new EventEmitter<Mensagem>();
-  mensagemDeSucessoEmiter = new EventEmitter<Mensagem>();
-
   mensagemEmiter = new EventEmitter<Mensagem>();
 
-  constructor(
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
-  handleError = (error: HttpErrorResponse): Observable<HttpErrorResponse> => {
-
+  handleError(error: HttpErrorResponse): Observable<never> {
     const errorArr = error.error;
     console.log(error.status);
 
-    if (error.status === 440 || error.status === 401 || error.status === 503 || error.status === 406) { // Erro de Negócio
-      throw errorArr;
+    if ([440, 401, 503, 406].includes(error.status)) {
+      return throwError(() => errorArr);
     } else {
       this.router.navigateByUrl('/erro-geral');
-      throw null;
+      return throwError(() => null);
     }
   }
 
-  mostrarMensagemDeSucesso(mensagem: string) {
-    this.emitirMensagem(1, mensagem);
+  mostrarMensagemDeErroCampos(titulo: string, campos: any[] = []) {
+    let mensagemCompleta = `<strong>${titulo}</strong>`;
+    if (campos.length > 0) {
+      mensagemCompleta += '<ul>';
+      campos.forEach(campo => {
+        mensagemCompleta += `<li>${campo.nome}: ${campo.message}</li>`;
+      });
+      mensagemCompleta += '</ul>';
+    }
+    this.emitirMensagem(2, mensagemCompleta);
   }
 
   mostrarMensagemDeErro(mensagem: string) {
     this.emitirMensagem(2, mensagem);
+  }
+
+  mostrarMensagemDeSucesso(mensagem: string) {
+    this.emitirMensagem(1, mensagem);
   }
 
   mostrarMensagemDeAlerta(mensagem: string) {
@@ -44,7 +49,6 @@ export class MensagensHandlerService {
   }
 
   private emitirMensagem(tipo: number, mensagem: string) {
-
     const mensagemModel = new Mensagem();
     mensagemModel.tipo = tipo;
     mensagemModel.mensagem = mensagem;
@@ -52,13 +56,6 @@ export class MensagensHandlerService {
   }
 
   resetMensagens() {
-
-    this.mensagemDeErroEmiter.emit(new Mensagem());
-    this.mensagemDeSucessoEmiter.emit(new Mensagem());
-
-    const mensagemModel = new Mensagem();
-    mensagemModel.tipo = 0;
-    mensagemModel.mensagem = "";
-    this.mensagemEmiter.emit(mensagemModel);
+    this.mensagemEmiter.emit(new Mensagem());
   }
 }

@@ -8,17 +8,17 @@ import { Livro } from '../../model/livro.model';
   providedIn: 'root'
 })
 export class LivroService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080/api/livro';
 
   constructor(private http: HttpClient) {}
 
   cadastrar(livro: FormData): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/livro/cadastrar`, livro);
+    return this.http.post(`${this.baseUrl}`, livro);
   }
 
   listar(pagina: number = 0, quantidade: number = 20): Observable<{ livros: Livro[], totalItems: number }> {
     let params = new HttpParams().set('pagina', pagina.toString()).set('quantidade', quantidade.toString());
-    return this.http.get<any>(`${this.baseUrl}/api/livro/listar`, { params }).pipe(
+    return this.http.get<any>(`${this.baseUrl}/listar`, { params }).pipe(
       map(response => {
         return {
           livros: response.livros.map((livroData: any) => new Livro(livroData)),
@@ -29,16 +29,16 @@ export class LivroService {
   }
 
   remover(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/api/livro/remover/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
   obterPorId(id: number): Observable<Livro> {
-    return this.http.get<Livro>(`${this.baseUrl}/api/livro/${id}`).pipe(
+    return this.http.get<Livro>(`${this.baseUrl}/${id}`).pipe(
       map(livroData => new Livro(livroData))
     );
   }
 
   atualizar(livro: FormData): Observable<any> {
-    return this.http.put(`${this.baseUrl}/api/livro/atualizar`, livro);
+    return this.http.put(`${this.baseUrl}`, livro);
   }
 }

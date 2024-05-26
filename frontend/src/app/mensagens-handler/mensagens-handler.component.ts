@@ -11,26 +11,21 @@ import { Mensagem } from './mensagem.model';
     CommonModule
   ],
   templateUrl: './mensagens-handler.component.html',
-  styleUrl: './mensagens-handler.component.css'
+  styleUrls: ['./mensagens-handler.component.css']
 })
 export class MensagensHandlerComponent implements OnInit, OnDestroy {
-
   @Output() atualizar = new EventEmitter();
 
   mensagem: Mensagem = new Mensagem();
   subscriptionMensagens$: Subscription | undefined;
 
-  constructor(
-    private mensagensHandlerService: MensagensHandlerService
-  ) { }
+  constructor(private mensagensHandlerService: MensagensHandlerService) {}
 
   ngOnInit() {
-
-    this.subscriptionMensagens$ =
-      this.mensagensHandlerService.mensagemEmiter.
-        subscribe(dados => {
-            this.mensagem = dados;
-        });
+    this.subscriptionMensagens$ = this.mensagensHandlerService.mensagemEmiter.subscribe(dados => {
+      this.mensagem = dados;
+      this.scrollToMessage();
+    });
   }
 
   resetMensagens() {
@@ -40,6 +35,13 @@ export class MensagensHandlerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.subscriptionMensagens$) {
       this.subscriptionMensagens$.unsubscribe();
+    }
+  }
+
+  private scrollToMessage() {
+    const element = document.getElementById('msg_erro_sucesso_aviso');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 }

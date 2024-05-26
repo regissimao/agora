@@ -8,6 +8,10 @@ import { Router, RouterModule } from '@angular/router';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntl } from '../../shared/custom-paginator-intl';
 import { Livro } from '../../model/livro.model';
+import {ConfirmDialogService} from "../../servicos/confirm-dialog.service";
+import {FormsModule} from "@angular/forms";
+import {MatInput} from "@angular/material/input";
+import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
 
 @Component({
   selector: 'app-gerenciar-estoque',
@@ -17,7 +21,11 @@ import { Livro } from '../../model/livro.model';
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    MatInput,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   templateUrl: './gerenciar-estoque.component.html',
   styleUrls: ['./gerenciar-estoque.component.css'],
@@ -27,7 +35,7 @@ import { Livro } from '../../model/livro.model';
 })
 export class GerenciarEstoqueComponent implements OnInit {
   livros: Livro[] = [];
-  displayedColumns: string[] = ['titulo', 'autor','precoFisico', 'acoes', ];
+  displayedColumns: string[] = ['titulo', 'autor','precoFisico', "precoDigital", 'acoes', ];
   totalItems: number = 0;
   pageSize: number = 20;
 
@@ -35,7 +43,8 @@ export class GerenciarEstoqueComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private livroService: LivroService
+    private livroService: LivroService,
+    private confirmDialogService: ConfirmDialogService
   ) {}
 
   ngOnInit(): void {
@@ -57,10 +66,17 @@ export class GerenciarEstoqueComponent implements OnInit {
     this.router.navigate(['/editar-livro', livro.id]);
   }
 
-  removerLivro(livro: Livro) {
-    this.livroService.remover(livro.id!).subscribe(() => {
-      this.carregarLivros(this.paginator.pageIndex, this.paginator.pageSize);
-    });
+  async removerLivro(livro: Livro) {
+    const confirm = await this.confirmDialogService.confirm(
+      'Confirmação',
+      'Tem certeza que deseja remover este livro?'
+    );
+
+    if (confirm) {
+      this.livroService.remover(livro.id!).subscribe(() => {
+        this.carregarLivros(this.paginator.pageIndex, this.paginator.pageSize);
+      });
+    }
   }
 
   onPageChange(event: any) {

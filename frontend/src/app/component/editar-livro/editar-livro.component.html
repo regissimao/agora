@@ -1,3 +1,4 @@
+<app-mensagens-handler></app-mensagens-handler>
 <div class="container">
   <mat-card>
     <div class="header">
@@ -51,7 +52,7 @@
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Sinopse</mat-label>
-          <textarea matInput formControlName="sinopse" required></textarea>
+          <textarea matInput formControlName="sinopse"></textarea>
           <mat-error *ngIf="livroForm.get('sinopse')?.invalid">A Sinopse é obrigatória</mat-error>
         </mat-form-field>
       </div>
@@ -74,11 +75,11 @@
       <div class="form-row">
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Preço Digital</mat-label>
-          <input type="text" matInput name="precoDigital" mask="separator.2" prefix="R$ " />
+          <input type="text" matInput formControlName="precoDigital" mask="separator.2" prefix="R$ " />
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Preço Físico</mat-label>
-          <input type="text" matInput name="precoFisico" mask="separator.2" prefix="R$ " />
+          <input type="text" matInput formControlName="precoFisico" mask="separator.2" prefix="R$ " />
         </mat-form-field>
         <mat-form-field class="form-field" appearance="fill">
           <mat-label>Número de Páginas</mat-label>
@@ -90,19 +91,24 @@
         </mat-form-field>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="capaLivroAtual">Capa Atual do Livro</label>
-          <img [src]="capaLivroUrl" alt="Capa do Livro" style="max-width: 200px; display: block; margin-bottom: 10px;">
-        </div>
-      </div>
-
-      <div class="form-row">
+      <div class="form-row file-row">
         <div class="form-group file-input">
-          <label for="novaCapaLivro">Nova Capa do Livro</label>
-          <input type="file" id="novaCapaLivro" (change)="onFileSelected('capaLivro', $event)" />
+          <label for="capaLivro">Capa do Livro</label>
+          <input type="file" id="capaLivro" (change)="onFileSelected('capaLivro', $event)" />
           <span *ngIf="capaLivro">Arquivo selecionado: {{ capaLivro.name }}</span>
+          <img *ngIf="livroForm.get('capaLivro')?.value && !capaLivro"
+               [src]="API_URL + livroForm.get('isbn')?.value + '/downloadCapa'"
+               alt="Capa do Livro" style="max-width: 200px; display: block; margin-bottom: 10px;">
           <mat-error *ngIf="capaLivroError">{{ capaLivroError }}</mat-error>
+        </div>
+        <div class="form-group file-input">
+          <label for="arquivoDigital">PDF do Livro</label>
+          <input type="file" id="arquivoDigital" (change)="onFileSelected('arquivoDigital', $event)" />
+          <span *ngIf="arquivoDigital">Arquivo selecionado: {{ arquivoDigital.name }}</span>
+          <a *ngIf="livroForm.get('arquivoDigital')?.value && !arquivoDigital"
+             [href]="API_URL + livroForm.get('isbn')?.value + '/downloadPdf'"
+             target="_blank">Ver arquivo PDF atual</a>
+          <mat-error *ngIf="pdfLivroError">{{ pdfLivroError }}</mat-error>
         </div>
       </div>
 

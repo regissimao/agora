@@ -55,8 +55,11 @@ export class LoginComponent {
         },
         (erro) => {
           console.log(erro);
-          console.log(erro.error.titulo);
-          this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo);
+          if (erro.error.titulo) {
+            this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo);
+          } else {
+            this.mensagensHandlerService.mostrarMensagemDeErro("Servidor indisponivel");
+          }
         }
       );
     } else {
