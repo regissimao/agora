@@ -82,7 +82,7 @@ export class GerenciarEstoqueComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filteredLivros = this.livros.filter(livro => livro.titulo.toLowerCase().includes(filterValue));
+    this.filteredLivros = this.livros.filter(livro => livro.titulo.toLowerCase().includes(filterValue)|| livro.isbn.toLowerCase().includes(filterValue) || livro.autor.toLowerCase().includes(filterValue));
   }
 
   editarLivro(livro: Livro) {
