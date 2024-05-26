@@ -1,14 +1,8 @@
 package br.com.agora.controller;
 
-import br.com.agora.dto.request.BuscarPdfLivroRequest;
-import br.com.agora.dto.request.CadastrarLivroRequest;
-import br.com.agora.dto.request.RetornarLivroRequest;
-import br.com.agora.dto.request.PesquisaLivroRequest;
-import br.com.agora.dto.response.CadastrarLivroResponse;
-import br.com.agora.dto.response.RetornarDadosLivroResponse;
+import br.com.agora.dto.request.*;
+import br.com.agora.dto.response.*;
 import br.com.agora.entity.Livro;
-import br.com.agora.dto.response.ListarLivroResponse;
-import br.com.agora.dto.response.PesquisaLivroResponse;
 import br.com.agora.service.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -28,7 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/livro")
@@ -45,6 +42,22 @@ public class LivroController {
         CadastrarLivroResponse response = livroService.cadastrarLivro(request);
         return ResponseEntity.ok(response);
 
+    }
+
+    @Operation(summary = "Atualizar um livro", description = "Atualiza os detalhes de um livro existente")
+    @ApiResponse(responseCode = "200", description = "Livro atualizado com sucesso", content = @Content(schema = @Schema(implementation = CadastrarLivroResponse.class)))
+    @PutMapping("/atualizar")
+    public ResponseEntity<CadastrarLivroResponse> atualizarLivro(@ModelAttribute @Valid AtualizarLivroRequest request) throws IOException, ParseException {
+        CadastrarLivroResponse response = livroService.atualizarLivro(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Obter detalhes de um livro pelo ID", description = "Retorna os detalhes de um livro específico pelo ID")
+    @ApiResponse(responseCode = "200", description = "Detalhes do livro retornados com sucesso", content = @Content(schema = @Schema(implementation = RetornarDadosLivroResponse.class)))
+    @GetMapping("/{id}")
+    public ResponseEntity<ObterLivroResponse> obterLivroPorId(@PathVariable Long id) {
+        ObterLivroResponse response = livroService.obterLivroPorId(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/retornar-livro")
@@ -66,12 +79,19 @@ public class LivroController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Livro>> listarLivros(
+    public ResponseEntity<Map<String, Object>> listarLivros(
             @RequestParam(name = "pagina", defaultValue = "0") int pagina,
             @RequestParam(name = "quantidade", defaultValue = "20") int quantidade) {
         PageRequest pageable = PageRequest.of(pagina, quantidade);
-        List<Livro> livros = livroService.getAllBooks(pageable);
-        return ResponseEntity.ok(livros);
+        Page<Livro> pageLivros = livroService.getAllBooks(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("livros", pageLivros.getContent());
+        response.put("totalItems", pageLivros.getTotalElements());
+        response.put("totalPages", pageLivros.getTotalPages());
+        response.put("currentPage", pageLivros.getNumber());
+
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Listar livros", description = "Retorna uma lista de todos os livros disponíveis")

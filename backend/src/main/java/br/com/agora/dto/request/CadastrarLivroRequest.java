@@ -1,17 +1,18 @@
 package br.com.agora.dto.request;
 
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+
 @Data
 public class CadastrarLivroRequest {
-//    @NotNull(message = "Capa do livro não pode ser nulo")
+    @NotNull(message = "Capa do livro não pode ser nulo")
     private MultipartFile capaLivro;
-//    @NotNull(message = "Arquivo Digital do livro não pode ser nulo")
+    @NotNull(message = "Arquivo Digital do livro não pode ser nulo")
     private MultipartFile arquivoDigital;
     @NotBlank(message = "ISBN deve ser informado. Você é informou: ${validatedValue}")
     @Size(min = 13, max = 13, message = "ISBN deve ter {max} caracteres.")
@@ -32,11 +33,7 @@ public class CadastrarLivroRequest {
     private String dataPublicacao;
     @NotBlank(message = "Tipo deve ser informado")
     private String tipoLivro;
-    @NotNull(message = "Preço deve ser informado")
-    @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     private Double precoDigital;
-    @NotNull(message = "Preço deve ser informado")
-    @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     private Double precoFisico;
     private Integer numeroPagina;
     private Integer quantidadeEstoque;

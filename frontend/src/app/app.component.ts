@@ -1,13 +1,31 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginComponent } from './component/login/login.component';
+import {NavigationComponent} from "./navigation/navigation.component";
+import {MensagensHandlerComponent} from "./mensagens-handler/mensagens-handler.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [
+    RouterModule,
+    RouterOutlet,
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    FontAwesomeModule,
+    LoginComponent,
+    NavigationComponent,
+    MensagensHandlerComponent
+  ],
+  providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Ágora';
 }

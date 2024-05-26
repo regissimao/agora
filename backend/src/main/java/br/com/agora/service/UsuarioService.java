@@ -1,14 +1,26 @@
 package br.com.agora.service;
 
-import br.com.agora.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@SuppressWarnings("unused")
+import br.com.agora.entity.Usuario;
+import br.com.agora.exception.BadRequestException;
+import br.com.agora.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
 
-    private final UsuarioRepository repository;
+    private final UsuarioRepository usuarioRepository;
+    
+    public Usuario logar(String email, String senha) {
+    	
+	 	Usuario usuario = usuarioRepository.findByEmail(email);
+	 	
+	 	if ((usuario == null) || (!senha.equals(usuario.getSenha()))) {
+		    throw new BadRequestException("Email e senha inválidos.");
+		}
+	 	
+	 	return usuario;
+	}
 }

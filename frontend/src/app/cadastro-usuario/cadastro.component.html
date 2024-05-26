@@ -2,76 +2,76 @@
     <div class="content">
       <div class="container">
         <h2>Formulário de Cadastro</h2>
-        <form>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form, $event)">
           <div class="form-group">
             <div class="form-camp">
               <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required>
+              <input type="email" id="email" name="email" ngModel required>
             </div>
   
             <div class="form-camp">
               <label for="name">Nome:</label>
-              <input type="text" id="name" name="name" required>
+              <input type="text" id="name" name="name" ngModel required>
             </div>
           </div>
   
           <div class="form-group">
             <div class="form-camp">
               <label for="cpf_cnpj">CPF/CNPJ:</label>
-              <input type="text" id="cpf_cnpj" name="cpf_cnpj" required>
+              <input type="text" id="cpf_cnpj" name="cpf_cnpj" ngModel required>
             </div>
             
             <div class="form-camp">
               <label for="birthdate">Data de Nascimento:</label>
-              <input type="date" id="birthdate" name="birthdate" required>
+              <input type="date" id="birthdate" name="birthdate" ngModel required>
             </div>
           </div>
   
           <div class="form-group">
             <div class="form-camp">
               <label for="address">Logradouro:</label>
-              <input type="text" id="address" name="address" required>
+              <input type="text" id="address" name="address" ngModel required>
             </div>
             
             <div class="form-camp">
               <label for="number">Número:</label>
-              <input type="text" id="number" name="number" required>
+              <input type="text" id="number" name="number" ngModel required>
             </div>
           </div>
   
           <div class="form-group">
             <div class="form-camp">
               <label for="complement">Complemento:</label>
-              <input type="text" id="complement" name="complement">
+              <input type="text" id="complement" ngModel name="complement">
             </div>
             
             <div class="form-camp">
               <label for="city">Cidade:</label>
-              <input type="text" id="city" name="city" required>
+              <input type="text" id="city" name="city" ngModel required>
             </div>
           </div>
   
           <div class="form-group">
             <div class="form-camp">
               <label for="state">Estado:</label>
-              <input type="text" id="state" name="state" required>
+              <input type="text" id="state" name="state" ngModel required>
             </div>
             
             <div class="form-camp">
               <label for="cep">CEP:</label>
-              <input type="text" id="cep" name="cep" required>
+              <input type="text" id="cep" name="cep" ngModel required>
             </div>
           </div>
   
           <div class="form-group">
             <div class="form-camp">
               <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" ngModel required>
             </div>
             
             <div class="form-camp">
               <label for="confirm_password">Confirmação de Senha:</label>
-              <input type="password" id="confirm_password" name="confirm_password" required>
+              <input type="password" id="confirm_password" ngModel name="confirm_password" required>
             </div>
           </div>
           <button type="submit">Enviar</button>

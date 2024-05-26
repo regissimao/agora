@@ -12,7 +12,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Livro {
 	
 	@Id
@@ -46,7 +45,7 @@ public class Livro {
 	private int numeroPagina;
 	
 	@Column(name = "data_publicacao")
-	private Date dataPublicacao;
+	private String dataPublicacao;
 	
 	@Column(name = "peso_fisico")
 	private Double precoFisico;
@@ -69,7 +68,7 @@ public class Livro {
 	@OneToMany(mappedBy = "livro", fetch = FetchType.LAZY)
 	private List<Pedido> pedidos;
 
-	public Livro(CadastrarLivroRequest livroRequest, String pathCapa, String pathPdf, Date data) {
+	public Livro(CadastrarLivroRequest livroRequest, String pathCapa, String pathPdf) {
 		this.isbn = livroRequest.getIsbn();
 		this.titulo = livroRequest.getTitulo();
 		this.autor = livroRequest.getAutor();
@@ -77,7 +76,7 @@ public class Livro {
 		this.categoria = livroRequest.getCategoria();
 		this.sinopse = livroRequest.getSinopse();
 		this.idioma = livroRequest.getIdioma();
-		this.dataPublicacao = data;
+		this.dataPublicacao = livroRequest.getDataPublicacao();
 		this.precoFisico = livroRequest.getPrecoFisico();
 		this.precoDigital = livroRequest.getPrecoDigital();
 		this.quantidadeEstoque = livroRequest.getQuantidadeEstoque();

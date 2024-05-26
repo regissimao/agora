@@ -1,11 +1,9 @@
 package br.com.agora.service;
 
 import br.com.agora.dto.ListarLivroVO;
+import br.com.agora.dto.request.AtualizarLivroRequest;
 import br.com.agora.dto.request.CadastrarLivroRequest;
-import br.com.agora.dto.response.CadastrarLivroResponse;
-import br.com.agora.dto.response.RetornarDadosLivroResponse;
-import br.com.agora.dto.response.ListarLivroResponse;
-import br.com.agora.dto.response.PesquisaLivroResponse;
+import br.com.agora.dto.response.*;
 import br.com.agora.entity.Livro;
 import br.com.agora.exception.BadRequestException;
 import br.com.agora.repository.LivroRepository;
@@ -24,8 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -54,22 +50,58 @@ public class LivroService {
     }
 
     public CadastrarLivroResponse cadastrarLivro(CadastrarLivroRequest livroRequest) throws IOException {
-        Date data;
         String pathCapa = uploadCapa(livroRequest.getIsbn(), livroRequest.getCapaLivro());
         String pathPdf = uploadPdf(livroRequest.getIsbn(), livroRequest.getArquivoDigital());
-        try {
-            data = new SimpleDateFormat("yyyy-MM-dd").parse(livroRequest.getDataPublicacao());
-        } catch (ParseException e) {
-            throw new BadRequestException(" Data de publicação inválida. Formato esperado: yyyy-MM-dd");
-        }
 
-        Livro livro = livroRepository.save(new Livro(livroRequest, pathCapa, pathPdf, data));
+        Livro livro = livroRepository.save(new Livro(livroRequest, pathCapa, pathPdf));
         return new CadastrarLivroResponse("Livro Cadastrado", livro);
     }
 
-    public List<Livro> getAllBooks(PageRequest pageable) {
-        Page<Livro> livros = livroRepository.findAll(pageable);
-        return livros.getContent();
+    public CadastrarLivroResponse atualizarLivro(AtualizarLivroRequest livroRequest) throws IOException {
+        Livro livroExistente = livroRepository.findByIsbn(livroRequest.getIsbn());
+
+        if (livroExistente == null) {
+            throw new BadRequestException("Livro não encontrado");
+        }
+
+//        String pathCapa = livroExistente.getCapaLivro();
+//        if (livroRequest.getCapaLivro() != null && !livroRequest.getCapaLivro().isEmpty()) {
+//            pathCapa = uploadCapa(livroRequest.getIsbn(), livroRequest.getCapaLivro());
+//        }
+//
+//        String pathPdf = livroExistente.getArquivoDigital();
+//        if (livroRequest.getArquivoDigital() != null && !livroRequest.getArquivoDigital().isEmpty()) {
+//            pathPdf = uploadPdf(livroRequest.getIsbn(), livroRequest.getArquivoDigital());
+//        }
+
+        livroExistente.setTitulo(livroRequest.getTitulo());
+        livroExistente.setAutor(livroRequest.getAutor());
+        livroExistente.setEditora(livroRequest.getEditora());
+        livroExistente.setIdioma(livroRequest.getIdioma());
+        livroExistente.setCategoria(livroRequest.getCategoria());
+        livroExistente.setNumeroPagina(livroRequest.getNumeroPagina());
+        livroExistente.setDataPublicacao(livroRequest.getDataPublicacao());
+        livroExistente.setPrecoFisico(livroRequest.getPrecoFisico());
+        livroExistente.setQuantidadeEstoque(livroRequest.getQuantidadeEstoque());
+//        livroExistente.setArquivoDigital(pathPdf);
+        livroExistente.setPrecoDigital(livroRequest.getPrecoDigital());
+//        livroExistente.setCapaLivro(pathCapa);
+        livroExistente.setTipoLivro(livroRequest.getTipoLivro());
+
+        livroRepository.save(livroExistente);
+
+        return new CadastrarLivroResponse("Livro atualizado com sucesso", livroExistente);
+    }
+
+    public Page<Livro> getAllBooks(PageRequest pageable) {
+        return livroRepository.findAll(pageable);
+    }
+
+    public ObterLivroResponse obterLivroPorId(Long id) {
+        Livro livro = livroRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Livro não encontrado"));
+
+        return new ObterLivroResponse(livro);
     }
     
     public String uploadPdf(String isbnLivro, MultipartFile arquivo) throws IOException {
@@ -123,5 +155,6 @@ public class LivroService {
         }
         return diretorio + nomeArquivo;
     }
+
 
 }

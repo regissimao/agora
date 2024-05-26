@@ -1,0 +1,21 @@
+<div *ngIf="mensagem && mensagem.tipo != 0"
+  role="alert" class="sd alert icon" id="msg_erro_sucesso_aviso"
+  [ngClass]="{
+    'success': mensagem.tipo === 1,
+    'danger': mensagem.tipo === 2,
+    'warning': mensagem.tipo === 3,
+    }"
+  (click)="resetMensagens()">
+  <span *ngIf="mensagem.tipo === 1" class="fa fa-check-circle" aria-hidden="true"></span>
+  <span *ngIf="mensagem.tipo === 2" class="fa fa-times-circle" aria-hidden="true"></span>
+  <span *ngIf="mensagem.tipo === 3" class="fa fa-exclamation-circle" aria-hidden="true"></span>
+  <div>
+    <strong *ngIf="mensagem.tipo === 1">Sucesso!</strong>
+    <strong *ngIf="mensagem.tipo === 2">Erro!</strong>
+    <strong *ngIf="mensagem.tipo === 3">Aviso!</strong>
+      {{ mensagem.mensagem }}
+  </div>
+  <script>
+    document.documentElement.scrollTop;
+  </script>
+</div>

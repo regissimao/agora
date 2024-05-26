@@ -1,0 +1,115 @@
+<div class="container">
+  <mat-card>
+    <div class="header">
+      <h2>Editar Livro</h2>
+    </div>
+    <form [formGroup]="livroForm" (ngSubmit)="onSubmit()" class="cadastro-livro-form">
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>ISBN</mat-label>
+          <input type="text" matInput formControlName="isbn" maxlength="20" appOnlyNumbers required>
+          <mat-error *ngIf="livroForm.get('isbn')?.invalid">
+            O ISBN é obrigatório.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Nome</mat-label>
+          <input type="text" matInput formControlName="titulo" required>
+          <mat-error *ngIf="livroForm.get('titulo')?.invalid">O Título é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Autor</mat-label>
+          <input type="text" matInput formControlName="autor" required>
+          <mat-error *ngIf="livroForm.get('autor')?.invalid">Autor é obrigatório</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Editora</mat-label>
+          <input type="text" matInput formControlName="editora" required>
+          <mat-error *ngIf="livroForm.get('editora')?.invalid">Editora é obrigatória</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Categoria</mat-label>
+          <input type="text" matInput formControlName="categoria" required>
+          <mat-error *ngIf="livroForm.get('categoria')?.invalid">Categoria é obrigatória</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Idioma</mat-label>
+          <input type="text" matInput formControlName="idioma" required>
+          <mat-error *ngIf="livroForm.get('idioma')?.invalid">Idioma é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Sinopse</mat-label>
+          <textarea matInput formControlName="sinopse" required></textarea>
+          <mat-error *ngIf="livroForm.get('sinopse')?.invalid">A Sinopse é obrigatória</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Data de Publicação</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dataPublicacao" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="livroForm.get('dataPublicacao')?.invalid">Data de Publicação é obrigatória</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Tipo de Livro</mat-label>
+          <input type="text" matInput formControlName="tipoLivro" required>
+          <mat-error *ngIf="livroForm.get('tipoLivro')?.invalid">Tipo de Livro é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Preço Digital</mat-label>
+          <input type="text" matInput name="precoDigital" mask="separator.2" prefix="R$ " />
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Preço Físico</mat-label>
+          <input type="text" matInput name="precoFisico" mask="separator.2" prefix="R$ " />
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Número de Páginas</mat-label>
+          <input type="number" matInput formControlName="numeroPagina">
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Quantidade em Estoque</mat-label>
+          <input type="number" matInput formControlName="quantidadeEstoque">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="capaLivroAtual">Capa Atual do Livro</label>
+          <img [src]="capaLivroUrl" alt="Capa do Livro" style="max-width: 200px; display: block; margin-bottom: 10px;">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group file-input">
+          <label for="novaCapaLivro">Nova Capa do Livro</label>
+          <input type="file" id="novaCapaLivro" (change)="onFileSelected('capaLivro', $event)" />
+          <span *ngIf="capaLivro">Arquivo selecionado: {{ capaLivro.name }}</span>
+          <mat-error *ngIf="capaLivroError">{{ capaLivroError }}</mat-error>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button mat-raised-button color="warn" (click)="voltar()">Voltar</button>
+        <button type="submit" mat-raised-button color="primary">Salvar</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
