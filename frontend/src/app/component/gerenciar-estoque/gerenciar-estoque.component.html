@@ -37,6 +37,7 @@
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td mat-cell *matCellDef="let livro">
         <button mat-button (click)="editarLivro(livro)">Editar</button>
+        <button mat-button (click)="visualizarLivro(livro.isbn)">Visualizar</button>
         <button mat-button color="warn" (click)="removerLivro(livro)" title="Remover Livro">Remover</button>
       </td>
     </ng-container>

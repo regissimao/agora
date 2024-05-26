@@ -12,7 +12,7 @@ export const routes: Routes = [
   {path: 'pagina-inicial', component: PaginaInicialComponent},
   {path: 'logar', component: LoginComponent},
   {path: 'resumo-pedido', component: ResumoPedidoComponent},
-  {path: 'visualizar-livro', component: VisualizarLivroComponent},
+  {path: 'visualizar-livro/:isbn', component: VisualizarLivroComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: 'logar', pathMatch: 'full'},
   { path: 'cadastrar-livro', component: CadastrarLivroComponent, canActivate: [AuthGuard] },
   { path: 'gerenciar-estoque', component: GerenciarEstoqueComponent, canActivate: [AuthGuard] },

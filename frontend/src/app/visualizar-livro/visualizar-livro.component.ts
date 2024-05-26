@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -50,6 +50,7 @@ export class VisualizarLivroComponent implements OnInit {
   ];
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private mensagensHandlerService: MensagensHandlerService,
     private livroService: LivroService,
@@ -57,7 +58,7 @@ export class VisualizarLivroComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const isbn = '978-3-16'; // substitua pelo ISBN correto
+    const isbn = this.route.snapshot.params['isbn'];
     this.livroService.retornarLivro(isbn).subscribe(
       (livro) => {
         this.livro = livro;

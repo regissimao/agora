@@ -64,7 +64,6 @@ export class GerenciarEstoqueComponent implements OnInit {
     const state = window.history.state;
     if (state && state.mensagemSucesso) {
       this.snackBar.open(state.mensagemSucesso, 'Fechar', { duration: 3000 });
-      // this.mensagensHandlerService.mostrarMensagemDeSucesso(state.mensagemSucesso);
     }
   }
 
@@ -104,5 +103,9 @@ export class GerenciarEstoqueComponent implements OnInit {
 
   onPageChange(event: any) {
     this.carregarLivros(event.pageIndex, event.pageSize);
+  }
+
+  visualizarLivro(isbn: any) {
+    this.router.navigate(['/visualizar-livro', isbn]);
   }
 }
