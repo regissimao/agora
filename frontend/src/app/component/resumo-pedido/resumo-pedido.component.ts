@@ -9,13 +9,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { MensagensHandlerComponent } from '../mensagens-handler/mensagens-handler.component';
-import { MensagensHandlerService } from '../mensagens-handler/mensagens-handler.service';
-import { Pedido } from '../servicos/entidades.model';
-import { PedidoService } from '../servicos/resumo-pedido.service';
-import { LogadoService } from '../servicos/logado.service';
-import { QuantidadeComponent } from '../../componentes/quantidade/quantidade.component';
-import { EnderecoComponent } from '../../componentes/endereco/endereco.component';
+import { MensagensHandlerComponent } from '../../mensagens-handler/mensagens-handler.component';
+import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handler.service';
+import { Pedido } from '../../servicos/entidades.model';
+import { PedidoService } from '../../servicos/resumo-pedido.service';
+import { LogadoService } from '../../servicos/logado.service';
+import { QuantidadeComponent } from '../../../componentes/quantidade/quantidade.component';
+import { EnderecoComponent } from '../../../componentes/endereco/endereco.component';
 
 @Component({
   selector: 'app-resumo-pedido',

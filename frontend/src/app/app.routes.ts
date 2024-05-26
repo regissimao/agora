@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { PaginaInicialComponent } from './pagina-inicial/pagina-inicial.component';
-import { ResumoPedidoComponent } from './resumo-pedido/resumo-pedido.component';
-import {VisualizarLivroComponent } from './visualizar-livro/visualizar-livro.component';
+import { ResumoPedidoComponent } from './component/resumo-pedido/resumo-pedido.component';
+import {VisualizarLivroComponent } from './component/visualizar-livro/visualizar-livro.component';
 import { CadastrarLivroComponent } from './component/cadastrar-livro/cadastrar-livro.component';
 import {AuthGuard} from "./auth/auth.guard";
 import { GerenciarEstoqueComponent } from './component/gerenciar-estoque/gerenciar-estoque.component';

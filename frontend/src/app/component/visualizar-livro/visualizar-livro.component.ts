@@ -9,13 +9,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { MensagensHandlerComponent } from '../mensagens-handler/mensagens-handler.component';
-import { MensagensHandlerService } from '../mensagens-handler/mensagens-handler.service';
-import { Livro } from '../servicos/entidades.model';
-import { LivroService } from '../servicos/visualizar-livro.service';
-import { LogadoService } from '../servicos/logado.service';
-import { QuantidadeComponent } from '../../componentes/quantidade/quantidade.component';
-import { EnderecoComponent } from '../../componentes/endereco/endereco.component';
+import { MensagensHandlerComponent } from '../../mensagens-handler/mensagens-handler.component';
+import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handler.service';
+import { Livro } from '../../servicos/entidades.model';
+import { LivroService } from '../../servicos/visualizar-livro.service';
+import { LogadoService } from '../../servicos/logado.service';
+import { QuantidadeComponent } from '../../../componentes/quantidade/quantidade.component';
+import { EnderecoComponent } from '../../../componentes/endereco/endereco.component';
 
 @Component({
   selector: 'app-visualizar-livro',

@@ -5,9 +5,9 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './component/login/login.component';
-import { ResumoPedidoComponent } from './resumo-pedido/resumo-pedido.component';
+import { ResumoPedidoComponent } from './component/resumo-pedido/resumo-pedido.component';
 import { QuantidadeComponent } from '../componentes/quantidade/quantidade.component';
-import {VisualizarLivroComponent } from './visualizar-livro/visualizar-livro.component';
+import {VisualizarLivroComponent } from './component/visualizar-livro/visualizar-livro.component';
 import {NavigationComponent} from "./navigation/navigation.component";
 import {MensagensHandlerComponent} from "./mensagens-handler/mensagens-handler.component";
 
