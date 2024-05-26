@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -71,8 +72,13 @@ public class LivroController {
     @GetMapping("/{isbn}/downloadCapa")
     public ResponseEntity<Resource> downloadCapa(@PathVariable String isbn) throws MalformedURLException {
         Resource resource = livroService.downloadCapa(isbn);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+        headers.set("Content-Disposition", "inline; filename=\"" + resource.getFilename() + "\"");
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .headers(headers)
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
     }
