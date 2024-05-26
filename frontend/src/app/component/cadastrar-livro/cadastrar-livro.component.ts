@@ -104,11 +104,13 @@ export class CadastrarLivroComponent {
           this.router.navigate(['/gerenciar-estoque']);
         },
         error: (erro) => {
-          console.log(erro);
-          if (!erro.error) {
-            this.mensagensHandlerService.mostrarMensagemDeErro('Erro desconhecido ao cadastrar livro' || erro);
+          console.error(erro);
+          if(erro.error.titulo) {
+            const titulo = erro.error.titulo || 'Erro ao atualizar livro';
+            const campos = erro.error.campos || [];
+            this.mensagensHandlerService.mostrarMensagemDeErroCampos(titulo, campos);
           } else {
-            this.mensagensHandlerService.mostrarMensagemDeErro(erro.error || 'Erro ao cadastrar livro');
+            this.mensagensHandlerService.mostrarMensagemDeErro("Servidor indisponível");
           }
         }
       });
