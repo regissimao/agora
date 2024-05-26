@@ -1,17 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LivroService } from '../../servicos/livro/livro.service';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginatorIntl } from '../../shared/custom-paginator-intl';
 import { Livro } from '../../model/livro.model';
-import {ConfirmDialogService} from "../../servicos/confirm-dialog.service";
-import {FormsModule} from "@angular/forms";
-import {MatInput} from "@angular/material/input";
-import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
+import { ConfirmDialogService } from "../../servicos/confirm-dialog.service";
+import { FormsModule } from "@angular/forms";
+import { MatInputModule } from "@angular/material/input";
+import { NgxMaskDirective, NgxMaskPipe } from "ngx-mask";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-gerenciar-estoque',
@@ -23,7 +25,9 @@ import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
     MatPaginatorModule,
     RouterModule,
     FormsModule,
-    MatInput,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
     NgxMaskDirective,
     NgxMaskPipe
   ],
@@ -35,7 +39,8 @@ import {NgxMaskDirective, NgxMaskPipe} from "ngx-mask";
 })
 export class GerenciarEstoqueComponent implements OnInit {
   livros: Livro[] = [];
-  displayedColumns: string[] = ['titulo', 'autor','precoFisico', "precoDigital", 'acoes', ];
+  filteredLivros: Livro[] = [];
+  displayedColumns: string[] = ['titulo', 'isbn', 'autor', 'precoFisico', 'precoDigital', 'acoes'];
   totalItems: number = 0;
   pageSize: number = 20;
 
@@ -54,12 +59,18 @@ export class GerenciarEstoqueComponent implements OnInit {
   carregarLivros(pageIndex: number = 0, pageSize: number = 20) {
     this.livroService.listar(pageIndex, pageSize).subscribe((response: any) => {
       this.livros = response.livros.map((livroData: any) => new Livro(livroData));
+      this.filteredLivros = this.livros;
       this.totalItems = response.totalItems;
       if (this.paginator) {
         this.paginator.pageIndex = pageIndex;
         this.paginator.pageSize = pageSize;
       }
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredLivros = this.livros.filter(livro => livro.titulo.toLowerCase().includes(filterValue));
   }
 
   editarLivro(livro: Livro) {

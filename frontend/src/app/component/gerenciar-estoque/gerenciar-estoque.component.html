@@ -2,10 +2,20 @@
   <h2>Gerenciar Estoque</h2>
   <button mat-raised-button color="primary" routerLink="/cadastrar-livro">Cadastrar Livro</button>
 
-  <table mat-table [dataSource]="livros" class="mat-elevation-z8">
+  <mat-form-field class="example-form-field">
+    <mat-label>Filtrar por Nome do Livro</mat-label>
+    <input matInput (input)="applyFilter($event)" placeholder="Digite o nome do livro">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="filteredLivros" class="mat-elevation-z8">
     <ng-container matColumnDef="titulo">
       <th mat-header-cell *matHeaderCellDef> Título </th>
       <td mat-cell *matCellDef="let livro"> {{livro.titulo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isbn">
+      <th mat-header-cell *matHeaderCellDef> ISBN </th>
+      <td mat-cell *matCellDef="let livro"> {{livro.isbn}} </td>
     </ng-container>
 
     <ng-container matColumnDef="autor">

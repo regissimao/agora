@@ -13,8 +13,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { OnlyNumbersDirective } from "../../directive/only-numbers.directive";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
-import {MensagensHandlerService} from "../../mensagens-handler/mensagens-handler.service";
-import {MensagensHandlerComponent} from "../../mensagens-handler/mensagens-handler.component";
+import { MensagensHandlerService } from "../../mensagens-handler/mensagens-handler.service";
+import { MensagensHandlerComponent } from "../../mensagens-handler/mensagens-handler.component";
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editar-livro',
@@ -37,21 +38,22 @@ import {MensagensHandlerComponent} from "../../mensagens-handler/mensagens-handl
     NgxMaskPipe,
     ReactiveFormsModule,
     MensagensHandlerComponent,
-
   ]
 })
 export class EditarLivroComponent implements OnInit {
   livroForm!: FormGroup;
   livroId!: number;
   livro!: Livro;
-  capaLivroUrl: string = 'assets/img/atpve_teste.png';
+  capaLivroUrl: string = '';
   capaLivro: File | null = null;
   arquivoDigital: File | null = null;
   capaLivroError: string | null = null;
   pdfLivroError: string | null = null;
 
-  readonly API_URL = 'http://localhost:8080/api/livro/';
+  capaLivroPreviewUrl: SafeUrl | null = null;
+  arquivoDigitalPreviewUrl: SafeUrl | null = null;
 
+  readonly API_URL = 'http://localhost:8080/api/livro/';
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +61,8 @@ export class EditarLivroComponent implements OnInit {
     private livroService: LivroService,
     private fb: FormBuilder,
     private mensagensHandlerService: MensagensHandlerService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -107,6 +110,9 @@ export class EditarLivroComponent implements OnInit {
       if (livro.capaLivro) {
         this.capaLivroUrl = `${this.API_URL}${livro.isbn}/downloadCapa?${new Date().getTime()}`;
       }
+      if (livro.arquivoDigital) {
+        this.arquivoDigitalPreviewUrl = this.sanitizer.bypassSecurityTrustUrl(`${this.API_URL}${livro.isbn}/downloadPdf`);
+      }
     });
   }
 
@@ -114,12 +120,18 @@ export class EditarLivroComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      const reader = new FileReader();
       if (field === 'capaLivro') {
         if (file.type.startsWith('image/')) {
           this.capaLivro = file;
           this.capaLivroError = null;
           // Atualize a URL da imagem para bustar o cache
           this.capaLivroUrl = `${this.API_URL}${this.livroForm.get('isbn')?.value}/downloadCapa?${new Date().getTime()}`;
+
+          reader.onload = () => {
+            this.capaLivroPreviewUrl = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+          };
+          reader.readAsDataURL(file);
         } else {
           this.capaLivroError = 'Por favor, selecione um arquivo de imagem válido.';
           this.capaLivro = null;
@@ -128,6 +140,11 @@ export class EditarLivroComponent implements OnInit {
         if (file.type === 'application/pdf') {
           this.arquivoDigital = file;
           this.pdfLivroError = null;
+
+          reader.onload = () => {
+            this.arquivoDigitalPreviewUrl = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+          };
+          reader.readAsDataURL(file);
         } else {
           this.pdfLivroError = 'Por favor, selecione um arquivo PDF válido.';
           this.arquivoDigital = null;
