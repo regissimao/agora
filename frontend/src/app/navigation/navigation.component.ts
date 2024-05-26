@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import {AuthService} from "../auth/auth.service";
 import {NgIf} from "@angular/common";
+import {MensagensHandlerComponent} from "../mensagens-handler/mensagens-handler.component";
 
 @Component({
   selector: 'app-navigation',
@@ -20,7 +21,8 @@ import {NgIf} from "@angular/common";
     MatButtonModule,
     RouterModule,
     MatMenuModule,
-    NgIf
+    NgIf,
+    MensagensHandlerComponent
   ],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']

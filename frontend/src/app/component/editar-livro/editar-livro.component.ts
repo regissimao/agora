@@ -13,9 +13,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { OnlyNumbersDirective } from "../../directive/only-numbers.directive";
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
-import { MensagensHandlerService } from "../../mensagens-handler/mensagens-handler.service";
 import { MensagensHandlerComponent } from "../../mensagens-handler/mensagens-handler.component";
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import {MensagensHandlerService} from "../../mensagens-handler/mensagens-handler.service";
 
 @Component({
   selector: 'app-editar-livro',
@@ -125,7 +125,6 @@ export class EditarLivroComponent implements OnInit {
         if (file.type.startsWith('image/')) {
           this.capaLivro = file;
           this.capaLivroError = null;
-          // Atualize a URL da imagem para bustar o cache
           this.capaLivroUrl = `${this.API_URL}${this.livroForm.get('isbn')?.value}/downloadCapa?${new Date().getTime()}`;
 
           reader.onload = () => {
@@ -176,8 +175,7 @@ export class EditarLivroComponent implements OnInit {
 
       this.livroService.atualizar(formData).subscribe({
         next: () => {
-          this.snackBar.open('Livro atualizado com sucesso!', 'Fechar', { duration: 3000 });
-          this.router.navigate(['/gerenciar-estoque']);
+          this.router.navigate(['/gerenciar-estoque'], { state: { mensagemSucesso: 'Livro atualizado com sucesso!' } });
         },
         error: (erro) => {
           console.error(erro);

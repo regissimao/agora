@@ -14,6 +14,9 @@ import { MatInputModule } from "@angular/material/input";
 import { NgxMaskDirective, NgxMaskPipe } from "ngx-mask";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import {MensagensHandlerComponent} from "../../mensagens-handler/mensagens-handler.component";
+import {MensagensHandlerService} from "../../mensagens-handler/mensagens-handler.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-gerenciar-estoque',
@@ -29,7 +32,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatIconModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    MensagensHandlerComponent
   ],
   templateUrl: './gerenciar-estoque.component.html',
   styleUrls: ['./gerenciar-estoque.component.css'],
@@ -47,13 +51,21 @@ export class GerenciarEstoqueComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+    private snackBar: MatSnackBar,
     private router: Router,
     private livroService: LivroService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    private mensagensHandlerService: MensagensHandlerService,
   ) {}
 
   ngOnInit(): void {
     this.carregarLivros();
+
+    const state = window.history.state;
+    if (state && state.mensagemSucesso) {
+      this.snackBar.open(state.mensagemSucesso, 'Fechar', { duration: 3000 });
+      // this.mensagensHandlerService.mostrarMensagemDeSucesso(state.mensagemSucesso);
+    }
   }
 
   carregarLivros(pageIndex: number = 0, pageSize: number = 20) {
