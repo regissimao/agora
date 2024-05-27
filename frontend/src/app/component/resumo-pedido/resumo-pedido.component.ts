@@ -92,7 +92,7 @@ export class ResumoPedidoComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/visualizar-livro', this.pedido?.livro.isbn]); // Adjust the route as necessary
+    this.router.navigate(['/visualizar-livro', this.pedido?.livro.isbn]); 
   }
 
   realizarPagamento() {

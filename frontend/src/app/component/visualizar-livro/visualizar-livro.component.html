@@ -13,7 +13,7 @@
       <p><strong>Preço Físico:</strong> {{ livro.precoFisico | currency:'BRL' }}</p>
       <div class="acoes">
         <button mat-raised-button color="primary">Adicionar ao Carrinho</button>
-        <button mat-raised-button color="accent" (click)="resumoPedido()">Comprar Agora</button>
+        <button mat-raised-button color="accent" (click)="resumoPedido(livro.isbn)">Comprar Agora</button>
       </div>
     </div>
   </div>

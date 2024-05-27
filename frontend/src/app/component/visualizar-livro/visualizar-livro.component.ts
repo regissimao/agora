@@ -70,8 +70,8 @@ export class VisualizarLivroComponent implements OnInit {
     );
   }
 
-  resumoPedido() {
-    this.router.navigate(['/resumo-pedido']);
+  resumoPedido(isbn:string) {
+    this.router.navigate(['/resumo-pedido',isbn]);
   }
 
   onSubmit(form: NgForm) {
