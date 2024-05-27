@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -45,6 +45,7 @@ export class ResumoPedidoComponent implements OnInit {
   pedido?: Pedido;
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private mensagensHandlerService: MensagensHandlerService,
     private pedidoService: PedidoService,
@@ -52,8 +53,7 @@ export class ResumoPedidoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const pedidoId = 3; // Replace with the actual ID you need to fetch
-    this.pedidoService.obterPedido(pedidoId).subscribe(
+    this.pedidoService.obterPedido(1).subscribe(
       (pedido) => {
         this.pedido = pedido;
         console.log(pedido);
@@ -69,8 +69,7 @@ export class ResumoPedidoComponent implements OnInit {
     if (!this.pedido) {
       return 'R$0';
     }
-    let valorTotal = Number(this.pedido.preco) * 1;
-    return valorTotal === 0 ? valorTotal.toString() : `R$${valorTotal}`;
+    return String(this.pedido.livro.precoDigital);
   }
 
   adicionarNovoEndereco() {
@@ -93,7 +92,7 @@ export class ResumoPedidoComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/pagina-anterior']); // Adjust the route as necessary
+    this.router.navigate(['/visualizar-livro', this.pedido?.livro.isbn]); // Adjust the route as necessary
   }
 
   realizarPagamento() {
@@ -103,6 +102,8 @@ export class ResumoPedidoComponent implements OnInit {
   removerItem() {
     console.log('');
   }
+
+
 
   onSubmit(form: NgForm) {
     if (form.valid && this.pedido) {

@@ -16,6 +16,9 @@ export class PedidoService {
   ) { }
 
   obterPedido(id: number): Observable<Pedido> {
-    return this.http.get<Pedido>(`${SERVER_URL}/pedido/obter/${id}`);
+    return this.http.get<Pedido>(`${SERVER_URL}/pedido/obter/${id}`, );
+  }
+  obterPedidoPorIsbn(isbn: string): Observable<Pedido> {
+    return this.http.get<Pedido>(`${SERVER_URL}/pedido/obterPorIsbn/${isbn}`, );
   }
 }
