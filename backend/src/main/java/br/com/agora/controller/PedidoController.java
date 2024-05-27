@@ -16,7 +16,6 @@ import java.text.ParseException;
 @RestController
 @RequestMapping("/pedido")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class PedidoController {
 
     private final PedidoService pedidoService;

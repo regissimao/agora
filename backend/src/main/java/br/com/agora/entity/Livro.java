@@ -1,6 +1,5 @@
 package br.com.agora.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,6 +23,7 @@ public class Livro {
 	private String isbn;
 
 	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Usuario> usuarios;
 
 	@Column(name = "titulo", nullable = false)

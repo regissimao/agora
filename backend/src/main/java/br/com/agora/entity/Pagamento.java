@@ -3,6 +3,7 @@ package br.com.agora.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Pagamento {
     @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -40,5 +40,6 @@ public class Pagamento {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Pedido> pedidos;
 }
