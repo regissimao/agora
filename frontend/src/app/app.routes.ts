@@ -11,7 +11,7 @@ import { EditarLivroComponent } from './component/editar-livro/editar-livro.comp
 export const routes: Routes = [
   {path: 'pagina-inicial', component: PaginaInicialComponent},
   {path: 'logar', component: LoginComponent},
-  {path: 'resumo-pedido/:isbn', component: ResumoPedidoComponent},
+  {path: 'resumo-pedido/:isbn', component: ResumoPedidoComponent, canActivate: [AuthGuard]},
   {path: 'visualizar-livro/:isbn', component: VisualizarLivroComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: 'logar', pathMatch: 'full'},
   { path: 'cadastrar-livro', component: CadastrarLivroComponent, canActivate: [AuthGuard] },

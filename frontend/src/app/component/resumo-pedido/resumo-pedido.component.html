@@ -2,7 +2,7 @@
   <h1 class="title">Resumo pedido</h1>
 
   <div class="book-summary" *ngIf="pedido.livro">
-    <img [src]="pedido.livro.capaLivro" alt="Imagem do Livro" class="book-image" />
+    <img [src]="API_URL + pedido.livro.isbn + '/downloadCapa'" alt="Capa do Livro" style="max-width: 200px; display: block; margin-bottom: 10px;">
 
     <div class="book-details">
       <div class="detail-item">

@@ -7,9 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MensagensHandlerComponent } from '../../mensagens-handler/mensagens-handler.component';
 import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handler.service';
-import { Usuario } from '../../servicos/entidades.model';
 import { UsuarioService } from '../../servicos/usuario.service';
 import { AuthService } from '../../auth/auth.service';
+import { Usuario } from '../../servicos/entidades.model';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,7 @@ import { AuthService } from '../../auth/auth.service';
 export class LoginComponent {
 
   @Output() logado = new EventEmitter<boolean>();
-
+  id: number = 0;
   email: string = "";
   senha: string = "";
   usuario: Usuario;
@@ -40,15 +40,15 @@ export class LoginComponent {
     private usuarioService: UsuarioService,
     private authService: AuthService
   ) {
-    this.usuario = new Usuario();
+    this.usuario = { id: this.id ,email: this.email, senha: this.senha };
   }
 
   onSubmit(form: NgForm) {
     if (form.valid) {
       this.usuarioService.logar(this.usuario).subscribe(
-        (response) => {
-          // Assumindo que a resposta indica um login bem-sucedido
-          this.authService.login();
+        (response: Usuario) => {
+          console.log(response)
+          this.authService.login(response);
           this.router.navigate(['/pagina-inicial']);
           this.logado.emit(true);
           form.reset();
@@ -58,7 +58,7 @@ export class LoginComponent {
           if (erro.error.titulo) {
             this.mensagensHandlerService.mostrarMensagemDeErro(erro.error.titulo);
           } else {
-            this.mensagensHandlerService.mostrarMensagemDeErro("Servidor indisponivel");
+            this.mensagensHandlerService.mostrarMensagemDeErro("Servidor indisponível");
           }
         }
       );

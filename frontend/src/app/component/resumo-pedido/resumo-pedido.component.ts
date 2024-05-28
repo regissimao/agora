@@ -1,3 +1,5 @@
+import { Pedido } from './../../servicos/entidades.model';
+import { AuthService } from './../../auth/auth.service';
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -11,7 +13,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MensagensHandlerComponent } from '../../mensagens-handler/mensagens-handler.component';
 import { MensagensHandlerService } from '../../mensagens-handler/mensagens-handler.service';
-import { Pedido } from '../../servicos/entidades.model';
 import { PedidoService } from '../../servicos/resumo-pedido.service';
 import { LogadoService } from '../../servicos/logado.service';
 import { QuantidadeComponent } from '../../../componentes/quantidade/quantidade.component';
@@ -41,7 +42,7 @@ import { EnderecoComponent } from '../../../componentes/endereco/endereco.compon
 })
 export class ResumoPedidoComponent implements OnInit {
   @Output() logado = new EventEmitter<boolean>();
-
+  readonly API_URL = 'http://localhost:8080/api/livro/';
   pedido?: Pedido;
 
   constructor(
@@ -49,20 +50,37 @@ export class ResumoPedidoComponent implements OnInit {
     private router: Router,
     private mensagensHandlerService: MensagensHandlerService,
     private pedidoService: PedidoService,
-    private logadoService: LogadoService
+    private logadoService: LogadoService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.pedidoService.obterPedido(1).subscribe(
-      (pedido) => {
-        this.pedido = pedido;
-        console.log(pedido);
-      },
-      (erro) => {
-        console.error(erro);
-        this.mensagensHandlerService.mostrarMensagemDeErro('Erro ao carregar o pedido.');
-      }
-    );
+    const isbn = this.route.snapshot.params['isbn'];
+    const usuario = this.authService.getCurrentUser();
+    if (usuario) {
+      this.pedidoService.criarPedido(isbn, usuario).subscribe(
+        (pedidoCriado) => {
+          this.pedido = pedidoCriado;
+          this.pedidoService.obterPedido(pedidoCriado.id).subscribe(
+            (pedido) => {
+              this.pedido = pedido;
+              console.log(pedido);
+            },
+            (erro) => {
+              console.error(erro);
+              this.mensagensHandlerService.mostrarMensagemDeErro('Erro ao carregar o pedido.');
+            }
+          );
+        },
+        (erro) => {
+          console.error(erro);
+          this.mensagensHandlerService.mostrarMensagemDeErro('Erro ao criar o pedido.');
+        }
+      );
+    } else {
+      this.mensagensHandlerService.mostrarMensagemDeErro('Usuário não autenticado.');
+      this.router.navigate(['/logar']);
+    }
   }
 
   get total(): string {
@@ -92,7 +110,7 @@ export class ResumoPedidoComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/visualizar-livro', this.pedido?.livro.isbn]); 
+    this.router.navigate(['/visualizar-livro', this.pedido?.livro.isbn]); // Adjust the route as necessary
   }
 
   realizarPagamento() {
@@ -102,7 +120,6 @@ export class ResumoPedidoComponent implements OnInit {
   removerItem() {
     console.log('');
   }
-
 
 
   onSubmit(form: NgForm) {
